@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title> HomePage Search </title>
+</head>
+    <body>
+        <form class="search_products">
+            <label>
+                Enter the product:
+            <input class="inputing" type="text" name="lookup"/>
+            </label>
+        
+            <p><button class="submit">Submit</button></p>
+        </form>
+        <div>
+            <h2>
+                <p>There're {{all_results|length}} products with that the tag </p>
+            </h2>
+        </div>
+        <div class="results">
+            {% if all_results|length > 0%}
+                {% for occurrence in all_results %}
+                    <div class="card">
+                        <img src= {{ occurrence.image }} alt="image"/>
+                        <div class="container">
+                            <h4><b>{{ occurrence.description }}</b></h4>
+                            <p>{{ occurrence.country }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h2> No occurrences found :/</h2>
+            {% endif %}
+        </div>
+    </body>
+</html>

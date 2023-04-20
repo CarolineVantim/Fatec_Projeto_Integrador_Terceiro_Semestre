@@ -28,8 +28,8 @@
                     <div class="card">
                         <img src= {{ occurrence.image }} alt="image"/>
                         <div class="container">
-                            <h4><b>{{ occurrence.description }}</b></h4>
-                            <p>{{ occurrence.country }}</p>
+                            <h4><b>{{ occurrence.name }}</b></h4>
+                            <p>Data Validade: {{ occurrence.expired_date }}</p>
                         </div>
                     </div>
                 {% endfor %}

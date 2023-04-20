@@ -56,9 +56,6 @@ Plataforma desenvolvida para criar um catálogo dinâmico integrado de produtos 
           <b>Fernando</b>
         </sub>
        </a>
-       <br />
-       <a href="https://www.linkedin.com/in/fernando-maldonado-fernandes/" title="Linkedin">@fernandomaldonado</a>
-       <br />
     </td>
      <td align="center">
       <a href="">

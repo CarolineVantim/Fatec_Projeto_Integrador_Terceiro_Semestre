@@ -1,4 +1,5 @@
 from polls.good_after.libs.good_after_class import SiteGoodAfter
+from storage_non_sequential.storage import MongoConnect
 from polls.models import GoodAfter
 from django.shortcuts import render
 
@@ -22,6 +23,7 @@ def build_product_occurrence(iterable_object: dict or object) -> None:
     return temp_list
 
 def check_occurrence(term: str) -> dict[str: str]:
+    non_sequential = MongoConnect()
     occurrences = GoodAfter.objects.all()
     if term.isdigit() and len(term) > 8:
         possible_key = occurrences.filter(reference=term)
@@ -49,6 +51,7 @@ def check_occurrence(term: str) -> dict[str: str]:
                     expired_date = occurrence['expired_date'],
                 )
                 model.save()
+                non_sequential.non_db_insert(occurrence)
             return {"all_results": search_goodafter.all_occurrences}
     return {"all_results": {}}
 

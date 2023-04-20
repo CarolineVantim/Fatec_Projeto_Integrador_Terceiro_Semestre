@@ -89,21 +89,15 @@ Plataforma desenvolvida para criar um catálogo dinâmico integrado de produtos 
           <b>Luiza</b>
         </sub>
        </a>
-       <br />
-        <a href="" title="Linkedin"></a>
-        <br />
     </td>
     <td align="center">
       <a href="">
-        <img src="" width="100px;" alt="Valdelaine"/>
+        <img src="https://avatars.githubusercontent.com/u/101229879?v=4" width="100px;" alt="Valdelaine"/>
         <br />
         <sub>
           <b>Valdelaine</b>
         </sub>
-       </a>
-       <br />
-        <a href="" title="Linkedin"></a>                                                           
-       <br />                                                                                                                                              
+       </a>                                                                                                                                           
     </td>  
   </tr>
   </table>

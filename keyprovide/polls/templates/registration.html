@@ -13,10 +13,12 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
         <title>Cadastro</title>
+        {% include 'nav_bar.html' %}
     </head>
-    {% include 'nav_bar.html' %}
+    
     <body>
         <div class="back">
+            {% include 'nav_bar.html' %}
             <div class="div-center">
                 <div class="content">
                     <form action="/polls/register" method="POST">
@@ -27,22 +29,28 @@
                             </div>
                             <hr />
                             <div class="form-group">
-                                Usuário : {{ user_form.username }}
+                                <label for="username">Usuário: </label>
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Usuário" value="{{user_form.username.value}}">
                             </div>
                             <div class="form-group">
-                                Primeiro Nome : {{ user_form.first_name }}
+                                <label for="first_name">Primeiro Nome:</label>
+                                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Primeiro Nome" value="{{user_form.first_name.value}}">
                             </div>
                             <div class="form-group">
-                                Sobrenome : {{ user_form.last_name }}
+                                <label for="last_name">Sobrenome:</label>
+                                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Sobrenome" value="{{user_form.last_name.value}}">
                             </div>
                             <div class="form-group">
-                                Email : {{ user_form.email }}
+                                <label for="email">Email:</label>
+                                <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{user_form.email.value}}">
                             </div>
                             <div class="form-group">
-                                Senha : {{ user_form.password }}
+                                <label for="password">Senha:</label>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Senha">
                             </div>
                             <div class="form-group">
-                                Confirme a Senha: {{ user_form.confirm_password }}
+                                <label for="confirm_password">Confirme a senha:</label>
+                                <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirme a senha">
                             </div>
                             <button type="submit" class="btn btn-primary">Cadastrar</button>
                             <a class="btn btn-dark" href="login_user" role="button">Entrar</a>

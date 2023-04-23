@@ -1,7 +1,13 @@
 from polls.good_after.libs.good_after_class import SiteGoodAfter
 from storage_non_sequential.storage import MongoConnect
+from django.contrib.auth.models import User, auth
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from polls.models import GoodAfter
-from django.shortcuts import render
+from polls.forms import UserForm
+#from polls.models import User
+
+
 
 def build_product_occurrence(iterable_object: dict or object) -> None:
     temp_list = list()
@@ -55,10 +61,56 @@ def check_occurrence(term: str) -> dict[str: str]:
             return {"all_results": search_goodafter.all_occurrences}
     return {"all_results": {}}
 
-def index(request) -> render:
+
+def register(request):
+    user_form = UserForm(request.POST)
+    context = {'user_form': user_form}
+    if user_form.is_valid():
+        print(user_form.clean_password())
+        if request.method == 'POST':
+            if user_form.clean_password() == user_form.clean_confirm_password():
+                if User.objects.filter(username=user_form.clean_username()).exists():
+                    messages.info(request, 'Este usuário não está disponível.')
+                    return redirect('registration')
+                elif User.objects.filter(email=user_form.clean_email()).exists():
+                    messages.info(request, 'Este email não está disponível.')
+                    return redirect('registration')
+                else:
+                    user_form.cleaned_data.pop('confirm_password')
+                    user_registration = User.objects.create_user(**user_form.cleaned_data)
+                    user_registration.save()
+                    return redirect('login_user')
+            else:
+                messages.info(request, 'Senhas não coincidem.')
+                return redirect('registration')
+        else:
+            return render(request, 'registration.html')
+    else:
+        return render(request, 'registration.html', context)
+
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = auth.authenticate(username=username, password=password)
+        print(user)
+        if user is not None:
+            auth.login(request, user)
+            return redirect('home')
+        else:
+            messages.info(request, 'Senha ou usuários inválido')
+            return redirect('login_user')
+    else:
+        return render(request, 'login_user.html')
+
+def home(request):
     term = request.GET.get('lookup')
     if term:
         possible_response = check_occurrence(term)
     else:
         possible_response = dict()
-    return render(request, "index.html", possible_response)
+    return render(request, "home.html", possible_response)
+
+def logout_user(request):
+    auth.logout(request)
+    return redirect('home')

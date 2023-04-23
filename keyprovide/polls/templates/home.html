@@ -42,12 +42,10 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ occurrence.name }}</h5>
                         <p class="card-text">Data Vencimento: {{ occurrence.expired_date }}</p>
-                        <a href="#" class="btn btn-primary">Doar</a>
+                        <a href="./product/{{ occurrence.reference }}" class="btn btn-primary">Doar</a>
                     </div>
                 </div>
                 {% endfor %}
-            {% else %}
-                <h2> No occurrences found :/</h2>
             {% endif %}
         </div>
 

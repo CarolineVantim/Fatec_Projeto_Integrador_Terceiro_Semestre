@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>Produto</title>
+</head>
+    <body>
+        {% include 'nav_bar.html' %}
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+        <div class="super_container">
+            <header class="header" style="display: none;">
+                <div class="header_main">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
+                                <div class="header_search">
+                                    <div class="header_search_content">
+                                        <div class="header_search_form_container">
+                                            <form action="#" class="header_search_form clearfix">
+                                                <div class="custom_dropdown">
+                                                    <div class="custom_dropdown_list"> <span class="custom_dropdown_placeholder clc">All Categories</span> <i class="fas fa-chevron-down"></i>
+                                                        <ul class="custom_list clc">
+                                                            <li><a class="clc" href="#">All Categories</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            </header>
+            <div class="single_product">
+                <div class="container-fluid" style=" background-color: #fff; padding: 11px;">
+                    <div class="row">
+                        <div class="col-lg-2 order-lg-1 order-2">
+                            <ul class="image_list">
+                                <li data-image="{{ product.image }}"><img src="{{ product.image }}" alt=""></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-4 order-lg-2 order-1">
+                            <div class="image_selected"><img src="{{ product.image }}" alt=""></div>
+                        </div>
+                        <div class="col-lg-6 order-3">
+                            <div class="product_description">
+                                <nav>
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="../home">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="#">Produtos</a></li>
+                                    </ol>
+                                </nav>
+                                <div class="product_name">{{ product.name }}</div>
+                                <div class="product-rating"><span class="badge badge-success"><i class="fa fa-star"></i> 4.5 Estrelas</span> <span class="rating-review">35 Pessoas Doaram</span></div>
+                                <div> <span class="product_price">R$ 12,00</span> <strike class="product_discount"> <span style='color:black'>R$ 20,00<span> </strike> </div>
+                                <div> <span class="product_saved">Desconto:</span> <span style='color:black'>R$ 8,00<span> </div>
+                                <hr class="singleline">
+                                <div> <span class="product_info">
+                                    {% autoescape off %}
+                                        {{ product.description }}
+                                    {% endautoescape %}</span></div>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="br-dashed">
+                                                <div class="row">
+                                                    <div class="col-md-3 col-xs-3"> <img src="https://img.icons8.com/color/48/000000/price-tag.png"> </div>
+                                                    <div class="col-md-9 col-xs-9">
+                                                        <div class="pr-info"> <span class="break-all">Data Vencimento: {{ product.expired_date }}</span> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7"> </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 15px;">
+                                        <div class="col-xs-6" style="margin-left: 15px;"> <span class="product_options">Variações</span><br> <button class="btn btn-primary btn-sm">Nenhuma</button> </div>
+                                        <div class="col-xs-6" style="margin-left: 55px;"> <span class="product_options">Variações</span><br> <button class="btn btn-primary btn-sm">Nenhuma</button> </div>
+                                    </div>
+                                </div>
+                                <hr class="singleline">
+                                <div class="order_info d-flex flex-row">
+                                    <form action="#">
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6" style="margin-left: 13px;">
+                                        <div class="product_quantity"> <span>QTD: </span> <input id="quantity_input" type="text" pattern="[0-9]*" value="1">
+                                            <div class="quantity_buttons">
+                                                <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
+                                                <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6"> <button type="button" class="btn btn-primary shop-button">Adicionar a Lista</button> <button type="button" class="btn btn-success shop-button">Doar Agora</button>
+                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-6"> <span class=" deal-text">Especificações</span> </div>
+                        <div class="col-md-6"> <a href="#" data-abc="true"> <span class="ml-auto view-all"></span> </a> </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="col-md-12">
+                                <tbody>
+                                    <tr class="row mt-10">
+                                        <td class="col-md-4"><span class="p_specification">SKU :</span> </td>
+                                        <td class="col-md-8">
+                                            <ul>
+                                                <li>{{ product.reference }}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row mt-10">
+                                        <td class="col-md-4"><span class="p_specification">Categorias :</span> </td>
+                                        <td class="col-md-8">
+                                            <ul>
+                                                <li> {{ product.category }} </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row mt-10">
+                                        <td class="col-md-4"><span class="p_specification">Data Vencimento :</span> </td>
+                                        <td class="col-md-8">
+                                            <ul>
+                                                <li> {{ product.expired_date }}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </body>
+</html>

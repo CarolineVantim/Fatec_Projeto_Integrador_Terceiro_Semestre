@@ -1,10 +1,11 @@
 from polls.good_after.libs.good_after_class import SiteGoodAfter
 from storage_non_sequential.storage import MongoConnect
 from django.contrib.auth.models import User, auth
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib import messages
 from polls.models import GoodAfter
 from polls.forms import UserForm
+from unidecode import unidecode
 #from polls.models import User
 
 
@@ -31,11 +32,18 @@ def build_product_occurrence(iterable_object: dict or object) -> None:
 def check_occurrence(term: str) -> dict[str: str]:
     non_sequential = MongoConnect()
     occurrences = GoodAfter.objects.all()
+    all_results = list()
+    possible_key = list()
     if term.isdigit() and len(term) > 8:
         possible_key = occurrences.filter(reference=term)
     else:
-        possible_key = occurrences.filter(meta_keywords__contains=term)
-    all_results = list()
+        temp_term = term.strip().lower()
+        possible_key_1 = list(occurrences.filter(meta_keywords__contains=term))
+        possible_key_2 = list(occurrences.filter(name__contains=temp_term))
+        possible_key_3 = list(occurrences.filter(name__contains=term))
+        for key in possible_key_1 + possible_key_2 + possible_key_3:
+            if key not in possible_key:
+                possible_key.append(key)
     if len(possible_key) > 0:
         all_results = build_product_occurrence(possible_key)
         return {"all_results": all_results}
@@ -45,6 +53,9 @@ def check_occurrence(term: str) -> dict[str: str]:
         if search_goodafter.availiable:
             search_goodafter.extract_all_occurrences()
             for occurrence in search_goodafter.all_occurrences:
+                exists = occurrences.filter(reference=occurrence['reference'])
+                if len(exists) > 0:
+                    continue
                 model = GoodAfter(
                     meta_keywords = occurrence['meta_keywords'],
                     name = occurrence['name'],
@@ -60,7 +71,6 @@ def check_occurrence(term: str) -> dict[str: str]:
                 non_sequential.non_db_insert(occurrence)
             return {"all_results": search_goodafter.all_occurrences}
     return {"all_results": {}}
-
 
 def register(request):
     user_form = UserForm(request.POST)
@@ -103,7 +113,7 @@ def login_user(request):
     else:
         return render(request, 'login_user.html')
 
-def home(request):
+def home(request, term: str or None = None):
     term = request.GET.get('lookup')
     if term:
         possible_response = check_occurrence(term)
@@ -113,4 +123,13 @@ def home(request):
 
 def logout_user(request):
     auth.logout(request)
-    return redirect('home')
+    return HttpResponseRedirect('home')
+
+def productdetail(request, pk):
+    term = request.GET.get('lookup')
+    if term:
+        request.path_info = '/polls/home'
+        return HttpResponseRedirect(f'/polls/home?lookup={term}')
+    product = GoodAfter.objects.get(reference=pk)
+    product.description = product.description.replace('\/', '/')
+    return render(request, 'product.html', {'product': product})

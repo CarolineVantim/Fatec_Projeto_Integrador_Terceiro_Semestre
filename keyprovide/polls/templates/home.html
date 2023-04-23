@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <script src="//code.jquery.com/jquery.min.js"></script>
+        <title>KeyProvide</title>
+    </head>
+
+    <body>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+        {% include 'nav_bar.html' %}
+        <div class="container my-3">
+            <h1 style="text-align:center;">Bem vindo ao KeyProvide</h1>
+        </div>
+        <div>
+            <h2>
+                <p> Encontramos {{all_results|length}} produto(s) relacionado(s) </p>
+            </h2>
+        </div>
+        <div class="results">
+            {% if all_results|length > 0%}
+                {% for occurrence in all_results %}
+                <div class="card" style="width: 18rem; display: inline-block;">
+                    <img class="card-img-top" src="{{ occurrence.image }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ occurrence.name }}</h5>
+                        <p class="card-text">Data Vencimento: {{ occurrence.expired_date }}</p>
+                        <a href="#" class="btn btn-primary">Doar</a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <h2> No occurrences found :/</h2>
+            {% endif %}
+        </div>
+
+    </body>
+
+</html>

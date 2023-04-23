@@ -17,3 +17,15 @@ class GoodAfter(models.Model):
 
     def __str__(self):
         return self.description
+
+
+class User(models.Model):
+    fullname = models.CharField('name', max_length=200)
+    birthday = models.PositiveIntegerField('birthday', default=0, null=True)
+    nationality = models.CharField('nationality', max_length=200)
+    username = models.CharField('username', max_length=200)
+    email = models.CharField('email', max_length=100)
+    password = models.CharField('password', max_length=100)
+
+    def __str__(self):
+        return self.fullname

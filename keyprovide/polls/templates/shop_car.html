@@ -1,0 +1,28 @@
+<div class="ls-cart">
+    <input type="checkbox" class="ls-checkbox-cart">
+    <header class="ls-cart-header">
+        <span class="ls-ico-cart ls-float-left"></span>
+        <small>Minha lista</small>
+        <strong>{{products.lenght}} produto(s)</strong>
+    </header>
+    <div class="ls-cart-content">
+    <ul class="ls-no-list-style">
+    {% if products.length > 0 %}
+        {% for occurrence in products %}
+            <li>
+                <h2 class="ls-title-product">
+                    <strong>{{ occurrence.quantaty }}</strong> {{ occurrence.name }}
+                </h2>
+                <p> { {occurrence.reference }}</p>
+                <a href="">Excluir</a>
+            </li>
+        {% endfor %}
+    {% else %}
+            <p>Nenhum produto no carrinho</p>
+    {% endif %}
+    </ul>
+    <footer class="ls-cart-footer ls-txt-center">
+    <a href="" class="ls-btn-primary">Finalizar Compra</a>
+    </footer>
+    </div>
+</div>

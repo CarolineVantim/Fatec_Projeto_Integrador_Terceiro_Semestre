@@ -29,3 +29,12 @@ class User(models.Model):
 
     def __str__(self):
         return self.fullname
+    
+
+class DonationList(models.Model):
+    user_id  =  models.IntegerField()
+    reference = models.CharField('reference', max_length=200)
+    name = models.CharField('name', max_length=200)
+    
+    def __str__(self):
+        return self.description

@@ -1,9 +1,11 @@
-from polls.good_after.libs.good_after_class import SiteGoodAfter
+from polls.erps_connections.good_after.libs.good_after_class import SiteGoodAfter
+from polls.erps_connections.ndays.libs.ndays_class import SiteNDays
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from storage_non_sequential.storage import MongoConnect
 from django.contrib.auth.models import User, auth
-from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib import messages
 from polls.models import GoodAfter
+from .models import DonationList
 from polls.forms import UserForm
 from unidecode import unidecode
 #from polls.models import User
@@ -113,6 +115,9 @@ def login_user(request):
     else:
         return render(request, 'login_user.html')
 
+def index(request):
+    return render(request, "index.html")
+
 def home(request, term: str or None = None):
     term = request.GET.get('lookup')
     if term:
@@ -133,3 +138,34 @@ def productdetail(request, pk):
     product = GoodAfter.objects.get(reference=pk)
     product.description = product.description.replace('\/', '/')
     return render(request, 'product.html', {'product': product})
+
+def add_product_list(request, user_id, reference):
+    pass
+
+
+def index_donations(request):
+	list = DonationList.objects.order_by("id")
+
+	form = DonationList()
+
+	context ={"list":list, "form": form}
+	
+	return render (request, "shopping_list/index.html", context)
+
+
+def completeItem(request, user_id: int, item_id: int):
+	item = DonationList.objects.get(pk=item_id)
+	item.complete = True
+	item.save()
+
+	return (redirect('index'))
+
+
+def deleteItem(request, user_id:int, item_id: int):
+	item = DonationList.objects.get(pk=item_id)
+	item.delete()
+	return redirect('index')
+
+def deleteAll(request):
+	DonationList.objects.all().delete()
+	return redirect('index')

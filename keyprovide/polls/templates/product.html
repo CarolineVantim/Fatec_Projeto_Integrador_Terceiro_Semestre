@@ -10,8 +10,10 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <title>Produto</title>
 </head>
+    {% if user.is_authenticated %}
     <body>
         {% include 'nav_bar.html' %}
+        {% include 'shop_car.html' %}
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -152,4 +154,8 @@
                 </div>
             </div>
     </body>
+    {% else %}
+        <p> Entre para visualizar essa página </p>
+    {% endif %}
+    {% include 'footer.html' %}
 </html>

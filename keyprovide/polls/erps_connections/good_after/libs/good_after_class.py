@@ -58,7 +58,9 @@ class SiteGoodAfter(object):
             'category',
             'attributes',
             'image',
-            'reference'
+            'reference',
+            'price_tax_exc',
+            'price_without_reduction'
         ]
         for key in wanted_keys:
             try:
@@ -75,6 +77,15 @@ class SiteGoodAfter(object):
                 break
         split_reference = reference_date.split(' - ') if reference_date != '-' else None
         self.product_dict['expired_date'] = split_reference[0] if split_reference else str()
+        try:
+            self.product_dict['price_from'] = self.product_dict.pop('price_without_reduction')
+        except KeyError:
+            self.product_dict['price_from'] = 0
+        try:
+            self.product_dict['price_to'] = self.product_dict.pop('price_tax_exc')
+        except KeyError:
+            self.product_dict['price_to'] = 0
+        self.product_dict['marketplace'] = 'GoodAfter'
 
     def __extract_attributes_occurrence(self) -> dict():
         self.product_dict = dict()
@@ -87,6 +98,7 @@ class SiteGoodAfter(object):
                     box_product = box_product.replace('false', "False")
                     try:
                         self.product_dict = eval(box_product)
+                        self.try_dict = self.product_dict
                     except NameError:
                         raise NameError('The dict transformation went wrong!')
                     if len(self.product_dict.keys()) > 0:

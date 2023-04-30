@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class GoodAfter(models.Model):
+class MarketPlaceProducts(models.Model):
     meta_keywords = models.CharField('meta_keywords', max_length=300)
     name = models.CharField('name', max_length=200)
     description = models.CharField('description', max_length=600)
@@ -11,6 +11,9 @@ class GoodAfter(models.Model):
     reference = models.CharField('reference', max_length=200)
     product_link = models.CharField('product_link', max_length=100)
     expired_date = models.CharField('expired_date', max_length=10)
+    price_from = models.FloatField('price_from')
+    price_to = models.FloatField('price_to')
+    marketplace = models.CharField('marketplace', max_length=200)
     updated_at = models.DateTimeField(
         verbose_name='Updated At',
         auto_now_add=False, auto_now=True)

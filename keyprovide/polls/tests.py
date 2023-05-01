@@ -1,11 +1,12 @@
-from polls.erps_connetions.good_after.libs.good_after_class import SiteGoodAfter
-from polls.erps_connetions.good_after.libs.ndays import SiteNDays
+from polls.erps_connections.good_after.libs.good_after_class import SiteGoodAfter
+#from polls.erps_connections.super_opa.libs.super_opa_class import SiteSuperOpa
+from polls.erps_connections.ndays.libs.ndays_class import SiteNDays
 from django.test import TestCase
 
 
 class HomeTest(TestCase):
     def setUp(self):
-        self.response = self.client.get('/polls/home')
+        self.response = self.client.get('/home')
 
     def test_200_response(self):
         self.assertEqual(self.response.status_code, 200)
@@ -19,7 +20,7 @@ class HomeTest(TestCase):
 
 class LoginTest(TestCase):
     def setUp(self):
-        self.response = self.client.get('/polls/login_user')
+        self.response = self.client.get('/login_user')
 
     def test_200_response(self):
         self.assertEqual(self.response.status_code, 200)
@@ -33,7 +34,7 @@ class LoginTest(TestCase):
 
 class LogoutTest(TestCase):
     def setUp(self):
-        self.response = self.client.get('/polls/logout_user')
+        self.response = self.client.get('/logout_user')
 
     def test_302_response(self):
         self.assertEqual(self.response.status_code, 302)
@@ -44,7 +45,7 @@ class LogoutTest(TestCase):
 
 class ResgistrationTest(TestCase):
     def setUp(self):
-        self.response = self.client.get('/polls/register')
+        self.response = self.client.get('/register')
 
     def test_200_response(self):
         self.assertEqual(self.response.status_code, 200)
@@ -69,7 +70,10 @@ class APIGoodAfterTest(TestCase):
             'image',
             'reference',
             'product_link',
-            'expired_date'
+            'expired_date',
+            'price_from',
+            'price_to',
+            'marketplace'
         ]
 
     def test_attribute_types(self):
@@ -131,40 +135,63 @@ class APIGoodAfterTest(TestCase):
         self.assertIsNotNone(self.search_goodafter.second_soup)
 
 
-    # TODO
-    class APINDays(TestCase):
-        def setUp(self) -> None:
-            pass
+class APINDaysTest(TestCase):
+    def setUp(self):
+        self.search_ndays = SiteNDays()
+        self.search_ndays.send_search_requisition()
+        self.wanted_keys = [
+            'meta_keywords',
+            'name',
+            'description',
+            'category',
+            'attributes',
+            'image',
+            'reference',
+            'product_link',
+            'expired_date',
+            'price_from',
+            'price_to',
+            'marketplace'
+        ]
 
-        def test_attribute_types(self) -> None:
-            pass
+    def test_attribute_types(self) -> None:
+        self.assertIs(type(self.search_ndays.headers), dict)
+        self.assertIs(type(self.search_ndays.params), dict)
 
-        def test_status_code(self) -> None:
-            pass
+    def test_status_code(self) -> None:
+        self.assertIn(self.search_ndays.response.status_code, range(200, 300))
 
-        def test_is_connected(self) -> None:
-            pass
+    def test_is_connected(self) -> None:
+        self.assertTrue(self.search_ndays.availiable)
 
-        def test_https_protocol(self) -> None:
-            pass
+    def test_https_protocol(self) -> None:
+        products_links = [occurrence.get('product_link') for occurrence in self.search_ndays.all_occurrences]
+        count_https = int()
+        for link in products_links:
+            if 'https' in link:
+                count_https += 1    
+        self.assertEquals(count_https, len(self.search_ndays.all_occurrences))
 
-        def test_has_occurrences(self) -> None:
-            pass
+    def test_has_occurrences(self) -> None:
+        self.assertGreater(len(self.search_ndays.all_occurrences), 0)
 
-        def test_verifing_occurrences(self) -> None:
-            pass
+    def test_verifing_occurrences(self) -> None:
+        self.assertIs(type(self.search_ndays.all_occurrences[0]), dict)
+        self.assertGreater(len(self.search_ndays.all_occurrences[0].keys()), 0)
+        self.assertIsNot(self.search_ndays.all_occurrences[0].get('image', '-'), '-')
 
-        def test_checking_output_json_keys_count(self) -> None:
-            pass
+    def test_checking_output_json_keys_count(self) -> None:
+        self.test_has_occurrences()
+        count = 0
+        for key in self.wanted_keys:
+            if key in self.search_ndays.all_occurrences[0].keys():
+                count += 1
+        self.assertEqual(len(self.wanted_keys), count)
 
-        def test_checking_output_json_keys_names(self) -> None:
-            pass
+    def test_checking_output_json_keys_names(self) -> None:
+        self.test_has_occurrences()
+        all_json_keys = list(self.search_ndays.all_occurrences[0].keys())
+        self.assertEqual(set(all_json_keys), set(self.wanted_keys))
 
-        def test_raising_error(self) -> None:
-            pass
-
-        def test_second_connection(self) -> None:
-            pass
-
-        def test_occurrence_second_soup(self) -> None:
-            pass
+    def test_occurrence_soup(self) -> None:
+        self.assertIsNotNone(self.search_ndays.soup)

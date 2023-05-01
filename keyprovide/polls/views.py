@@ -3,8 +3,8 @@ from polls.erps_connections.ndays.libs.ndays_class import SiteNDays
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from storage_non_sequential.storage import MongoConnect
 from django.contrib.auth.models import User, auth
+from polls.models import MarketPlaceProducts
 from django.contrib import messages
-from polls.models import GoodAfter
 from .models import DonationList
 from polls.forms import UserForm
 from unidecode import unidecode
@@ -31,21 +31,68 @@ def build_product_occurrence(iterable_object: dict or object) -> None:
         temp_list.append(object_key)
     return temp_list
 
-def check_occurrence(term: str) -> dict[str: str]:
-    non_sequential = MongoConnect()
-    occurrences = GoodAfter.objects.all()
-    all_results = list()
-    possible_key = list()
-    if term.isdigit() and len(term) > 8:
-        possible_key = occurrences.filter(reference=term)
+def checking_marketplace_occurrences(term: str, marketplace: str):
+    all_possible_key = list()
+    occurrences = MarketPlaceProducts.objects.all()
+    if marketplace.lower() == 'all':
+        if term.isdigit() and len(term) > 8:
+            possible_key = occurrences.filter(reference=term)
+            if len(possible_key) > 0:
+                return possible_key
+        else:
+            temp_term = term.strip().lower()
+            possible_key = occurrences.filter(reference=term)
+            if len(possible_key) > 0:
+                return possible_key 
+            possible_key_1 = list(occurrences.filter(meta_keywords__contains=term))
+            possible_key_2 = list(occurrences.filter(name__contains=temp_term))
+            possible_key_3 = list(occurrences.filter(name__contains=term))
+            for key in possible_key_1 + possible_key_2 + possible_key_3:
+                if key not in possible_key:
+                    all_possible_key.append(key)
     else:
-        temp_term = term.strip().lower()
-        possible_key_1 = list(occurrences.filter(meta_keywords__contains=term))
-        possible_key_2 = list(occurrences.filter(name__contains=temp_term))
-        possible_key_3 = list(occurrences.filter(name__contains=term))
-        for key in possible_key_1 + possible_key_2 + possible_key_3:
-            if key not in possible_key:
-                possible_key.append(key)
+        if term.isdigit() and len(term) > 8:
+            possible_key = occurrences.filter(reference=term, marketplace=marketplace)
+            if len(possible_key) > 0:
+                return possible_key
+        else:
+            temp_term = term.strip().lower()
+            possible_key_1 = list(occurrences.filter(meta_keywords__contains=term, marketplace=marketplace))
+            possible_key_2 = list(occurrences.filter(name__contains=temp_term, marketplace=marketplace))
+            possible_key_3 = list(occurrences.filter(name__contains=term, marketplace=marketplace))
+            for key in possible_key_1 + possible_key_2 + possible_key_3:
+                if key not in possible_key:
+                    possible_key.append(key)
+    return all_possible_key
+
+def saving_marketplace_occurrences(all_occurrences: list) -> None:
+    occurrences = MarketPlaceProducts.objects.all()
+    non_sequential = MongoConnect()
+    for occurrence in all_occurrences:
+        exists = occurrences.filter(reference=occurrence['reference'])
+        if len(exists) > 0:
+            continue
+        model = MarketPlaceProducts(
+            meta_keywords = str(occurrence['meta_keywords']),
+            name = str(occurrence['name']),
+            description = str(occurrence['description']),
+            category = str(occurrence['category']),
+            attributes = str(occurrence['attributes']),
+            image = str(occurrence['image']),
+            reference = str(occurrence['reference']),
+            product_link = str(occurrence['product_link']),
+            expired_date = str(occurrence['expired_date']),
+            price_from = float(occurrence['price_from']),
+            price_to = float(occurrence['price_to']),
+            marketplace = str(occurrence['marketplace'])
+        )
+        model.save()
+        occurrence['expired_date'] = str(occurrence['expired_date'])
+        non_sequential.non_db_insert(occurrence)
+
+def check_occurrence(term: str, marketplace: str) -> dict[str: str]:
+    all_results = list()
+    possible_key = checking_marketplace_occurrences(term, marketplace)
     if len(possible_key) > 0:
         all_results = build_product_occurrence(possible_key)
         return {"all_results": all_results}
@@ -54,23 +101,7 @@ def check_occurrence(term: str) -> dict[str: str]:
         search_goodafter.send_search_requisition()
         if search_goodafter.availiable:
             search_goodafter.extract_all_occurrences()
-            for occurrence in search_goodafter.all_occurrences:
-                exists = occurrences.filter(reference=occurrence['reference'])
-                if len(exists) > 0:
-                    continue
-                model = GoodAfter(
-                    meta_keywords = occurrence['meta_keywords'],
-                    name = occurrence['name'],
-                    description = occurrence['description'],
-                    category = occurrence['category'],
-                    attributes = occurrence['attributes'],
-                    image = occurrence['image'],
-                    reference = occurrence['reference'],
-                    product_link = occurrence['product_link'],
-                    expired_date = occurrence['expired_date'],
-                )
-                model.save()
-                non_sequential.non_db_insert(occurrence)
+            saving_marketplace_occurrences(search_goodafter.all_occurrences)
             return {"all_results": search_goodafter.all_occurrences}
     return {"all_results": {}}
 
@@ -116,12 +147,15 @@ def login_user(request):
         return render(request, 'login_user.html')
 
 def index(request):
-    return render(request, "index.html")
+    search_ndays = SiteNDays()
+    search_ndays.send_search_requisition()
+    saving_marketplace_occurrences(search_ndays.all_occurrences)
+    return render(request, "index.html", {"all_results": search_ndays.all_occurrences})
 
 def home(request, term: str or None = None):
     term = request.GET.get('lookup')
     if term:
-        possible_response = check_occurrence(term)
+        possible_response = check_occurrence(term, 'All')
     else:
         possible_response = dict()
     return render(request, "home.html", possible_response)
@@ -135,7 +169,7 @@ def productdetail(request, pk):
     if term:
         request.path_info = '/polls/home'
         return HttpResponseRedirect(f'/polls/home?lookup={term}')
-    product = GoodAfter.objects.get(reference=pk)
+    product = MarketPlaceProducts.objects.get(reference=pk)
     product.description = product.description.replace('\/', '/')
     return render(request, 'product.html', {'product': product})
 

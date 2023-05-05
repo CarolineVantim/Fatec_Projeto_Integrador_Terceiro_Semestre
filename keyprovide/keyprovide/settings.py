@@ -77,10 +77,14 @@ WSGI_APPLICATION = 'keyprovide.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'keyprovide',
+        # 'CLIENT': {
+        #         'host': 'mongodb+srv://fer:12345@cluster.dpncvxr.mongodb.net/?retryWrites=true&w=majority'
+        # }  
     }
 }
+
 
 
 # Password validation

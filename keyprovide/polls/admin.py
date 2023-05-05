@@ -1,3 +1,10 @@
 from django.contrib import admin
+from .models import MarketPlaceProducts
+from .models import User
+from .models import DonationList
 
-# Register your models here.
+
+admin.site.register(MarketPlaceProducts)
+admin.site.register(User)
+admin.site.register(DonationList)
+

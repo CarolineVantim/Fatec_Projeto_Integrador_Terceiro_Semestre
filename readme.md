@@ -12,15 +12,15 @@ Projeto desenvolvido para o terceiro semestre do curso de Desenvolvimento de Sof
 - Framework Django;
 - SQLite;
 - MongoDB;
- 
+
   <h3>Tópicos que serão encontrados nesse repositório<br></h3>
   • Códigos desenvolvidos em Python;<br>
   • Testes desenvolvidos baseados na Framework Django;<br>
   • Utilização do paradigma de programação OO (Object-oriented);<br>
-  
-## Escopo  
+
+## Escopo
 Plataforma desenvolvida para criar um catálogo dinâmico integrado de produtos que possui como principal objetivo, se conectar com o sistemas de supermercados, e realizar uma análise de seu estoque e da data de validade dos produtos, em proporção da necessidade apresentado por instituições de caridade, é ofertado acordos com os produtos com as datas de validação mais próximas, assim instigando a população a doar esses produtos que serão desperdiçados a essas instituições, auxiliando há duas causas simultaneamente, o desperdício de alimentos e a fome.
- 
+
 ## No sistema é possível encontrar:
  •	Estrutura para as entidades que se relacionam no sistema; <br> 
  •	Interação entre diferentes objetos para integração do sistema; <br>
@@ -47,7 +47,7 @@ Plataforma desenvolvida para criar um catálogo dinâmico integrado de produtos 
           <b>Caroline Vantim</b>
         </sub>
        </a>
-    </td> 
+    </td>
     <td align="center">
       <a href="https://github.com/Lifer18">
         <img src="https://avatars.githubusercontent.com/u/102481969?v=4" width="100px;" alt="Fernando"/>
@@ -85,7 +85,7 @@ Plataforma desenvolvida para criar um catálogo dinâmico integrado de produtos 
         <sub>
           <b>Valdelaine</b>
         </sub>
-       </a>                                                                                                                                           
-    </td>  
+       </a>
+    </td>
   </tr>
   </table>

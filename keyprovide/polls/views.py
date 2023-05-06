@@ -43,7 +43,7 @@ def checking_marketplace_occurrences(term: str, marketplace: str):
             temp_term = term.strip().lower()
             possible_key = occurrences.filter(reference=term)
             if len(possible_key) > 0:
-                return possible_key 
+                return possible_key
             possible_key_1 = list(occurrences.filter(meta_keywords__contains=term))
             possible_key_2 = list(occurrences.filter(name__contains=temp_term))
             possible_key_3 = list(occurrences.filter(name__contains=term))

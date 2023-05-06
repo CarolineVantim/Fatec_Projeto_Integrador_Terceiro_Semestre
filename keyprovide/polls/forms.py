@@ -41,7 +41,7 @@ class UserForm(forms.Form):
     #nationality = forms.CharField(label= "nationality", max_length=50)
     password = forms.CharField(label= "password", max_length=50, widget=forms.PasswordInput())
     confirm_password = forms.CharField(label= "confirm_password", max_length=50)
-    
+
     def clean_username(self):
         username = self.cleaned_data['username']
         return username

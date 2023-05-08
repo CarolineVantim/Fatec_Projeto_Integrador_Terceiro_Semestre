@@ -7,13 +7,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        {% load static %}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
         <script src="//code.jquery.com/jquery.min.js"></script>
         <title>KeyProvide</title>
     </head>
 
-    <body>
+    <body style="min-height: 100vh;">
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -42,13 +41,13 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ occurrence.name }}</h5>
                         <p class="card-text">Data Vencimento: {{ occurrence.expired_date }}</p>
-                        <a href="./product/{{ occurrence.reference }}" class="btn btn-primary">Doar</a>
+                        <a href="./product/{{ occurrence.reference }}" class="btn btn-primary">Visualizar Produto</a>
                     </div>
                 </div>
                 {% endfor %}
             {% endif %}
         </div>
-
+        
     </body>
-
+     {% include 'footer.html' %}
 </html>

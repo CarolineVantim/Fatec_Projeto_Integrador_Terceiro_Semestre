@@ -195,3 +195,42 @@ class APINDaysTest(TestCase):
 
     def test_occurrence_soup(self) -> None:
         self.assertIsNotNone(self.search_ndays.soup)
+
+
+    #ToDo
+class APISuperOpaTest(TestCase):
+    def setUp(self) -> None:
+        pass
+
+    def test_attribute_types(self) -> None:
+        pass
+
+    def test_status_code(self) -> None:
+        pass
+
+    def test_is_connected(self) -> None:
+        pass
+
+    def test_https_protocol(self) -> None:
+        pass
+
+    def test_has_occurrences(self) -> None:
+        pass
+
+    def test_verifing_occurrences(self) -> None:
+        pass
+
+    def test_checking_output_json_keys_count(self) -> None:
+        pass
+
+    def test_checking_output_json_keys_names(self) -> None:
+        pass
+
+    def test_raising_error(self) -> None:
+        pass
+
+    def test_second_connection(self) -> None:
+        pass
+
+    def test_occurrence_second_soup(self) -> None:
+        pass

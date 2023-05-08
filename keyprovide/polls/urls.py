@@ -10,4 +10,8 @@ urlpatterns = [
     path("logout_user", views.logout_user, name="logout_user"),
     path("home", views.home, name="home"),
     path('product/<str:pk>', views.productdetail, name='productdetail'),
+    path('delete_item/<int:user_id>/<str:reference>', views.delete_item, name='delete_item'),
+    path('donation_list/<str:user_id>', views.index_donations, name='donation_list'),
+    path('add_product/<int:user_id>/<str:reference>/<str:quantaty>', views.add_product_list, name='add_product_list'),
+    path('donate_product/<int:pk>/<int:user_id>', views.donate_product, name='donate_product'),
 ]

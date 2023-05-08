@@ -1,28 +1,119 @@
-<div class="ls-cart">
-    <input type="checkbox" class="ls-checkbox-cart">
-    <header class="ls-cart-header">
-        <span class="ls-ico-cart ls-float-left"></span>
-        <small>Minha lista</small>
-        <strong>{{products.lenght}} produto(s)</strong>
-    </header>
-    <div class="ls-cart-content">
-    <ul class="ls-no-list-style">
-    {% if products.length > 0 %}
-        {% for occurrence in products %}
-            <li>
-                <h2 class="ls-title-product">
-                    <strong>{{ occurrence.quantaty }}</strong> {{ occurrence.name }}
-                </h2>
-                <p> { {occurrence.reference }}</p>
-                <a href="">Excluir</a>
-            </li>
-        {% endfor %}
-    {% else %}
-            <p>Nenhum produto no carrinho</p>
-    {% endif %}
-    </ul>
-    <footer class="ls-cart-footer ls-txt-center">
-    <a href="" class="ls-btn-primary">Finalizar Compra</a>
-    </footer>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/index_style.css' %}">
+        <title> HomePage Search </title>
+    </head>
+    <body>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <!------ Include the above in your HEAD tag ---------->
+        {% include 'nav_bar.html' %}
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h5><span class="glyphicon glyphicon-shopping-cart"></span> Lista de Doações </h5>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button type="button" class="btn btn-primary btn-sm btn-block">
+                                            <a class="glyphicon glyphicon-share-alt" href="{% url 'home' %}">
+                                                <span >Selecionar mais produtos</span> 
+                                            </a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            {% for product in products%}
+                                <div class="row">
+                                    <div class="col-xs-2"><img class="img-responsive" src="{{product.product_occurrence.image}}">
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <h4 class="product-name"><strong> <a href="{% url 'productdetail' product.product_occurrence.reference %}">{{product.product_occurrence.name}} </a></strong></h4><h4>
+                                        <small> {{product.product_occurrence.expired_date}} </small></h4>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-6 text-right">
+                                            <h6><strong> {{product.product_occurrence.price_to}} <span class="text-muted">x</span></strong></h6>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <input type="text" class="form-control input-sm" value="1">
+                                        </div>
+                                        {% if not product.donation_occurrence.was_donated %}
+                                            <div class="col-xs-2">
+                                                <button type="button" class="btn btn-link btn-xs">
+                                                    <a href="{% url 'delete_item' user.id product.product_occurrence.reference %}">
+                                                        <span class="glyphicon glyphicon-trash"></span> 
+                                                    </a>
+                                                </button>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    {% if not product.donation_occurrence.was_donated %}
+                                        <div class="col-xs-10">
+                                            <a href="#">
+                                                <p class="text-right"> Por que doar esse produto? </p>
+                                            </a>
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <button type="button" class="btn btn-warning btn-block">
+                                                <a href="{% url 'donate_product' product.donation_occurrence.pk user.id%}">Doar</a>
+                                            </button>
+                                        </div>
+                                    {% else %}
+                                        <div class="col-xs-10">
+                                                <p class="text-right"> Produto doado. </p>
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <i class="glyphicon glyphicon-ok"></i>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <hr>
+                            {% endfor %}
+                            <div class="row">
+                                <div class="text-center">
+                                    <div class="col-xs-9">
+                                        <h6 class="text-right">Added items?</h6>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <button type="button" class="btn btn-default btn-sm btn-block">
+                                            Update cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="row text-center">
+                                <div class="col-xs-9">
+                                    <h4 class="text-right">Total de Produtos: <strong> {{products|length}}</strong></h4>
+                                </div>
+                                <div class="col-xs-3">
+                                    <button type="button" class="btn btn-success btn-block">
+                                        Atualizar Lista
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    {% include 'footer.html' %}
+</html>

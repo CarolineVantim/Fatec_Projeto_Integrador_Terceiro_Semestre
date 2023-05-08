@@ -32,12 +32,14 @@ class User(models.Model):
 
     def __str__(self):
         return self.fullname
-
+    
 
 class DonationList(models.Model):
     user_id  =  models.IntegerField()
     reference = models.CharField('reference', max_length=200)
-    name = models.CharField('name', max_length=200)
-
+    was_donated = models.BooleanField(default=False)
+    donated_by = models.IntegerField(null=True)
+    quantaty = models.IntegerField()
+    
     def __str__(self):
         return self.description

@@ -43,7 +43,7 @@ def checking_marketplace_occurrences(term: str, marketplace: str):
             temp_term = term.strip().lower()
             possible_key = occurrences.filter(reference=term)
             if len(possible_key) > 0:
-                return possible_key
+                return possible_key 
             possible_key_1 = list(occurrences.filter(meta_keywords__contains=term))
             possible_key_2 = list(occurrences.filter(name__contains=temp_term))
             possible_key_3 = list(occurrences.filter(name__contains=term))
@@ -173,33 +173,42 @@ def productdetail(request, pk):
     product.description = product.description.replace('\/', '/')
     return render(request, 'product.html', {'product': product})
 
-def add_product_list(request, user_id, reference):
-    pass
+def add_product_list(request, user_id, reference, quantaty: int or None = None):
+    occurrences = DonationList(
+        user_id=user_id,
+        reference=reference,
+        quantaty=quantaty if quantaty else 1)
+    occurrences.save()
+    product = MarketPlaceProducts.objects.get(reference=reference)
+    product.description = product.description.replace('\/', '/')
+    return render(request, 'product.html', {'product': product})
 
+def index_donations(request, user_id: int):
+    occurrences = DonationList.objects.all()
+    list_ = occurrences.filter(user_id=user_id)
+    products = list()
+    for occurrence in list_:
+        print(occurrence.was_donated)
+        occurrences_dicts = {
+            'product_occurrence': MarketPlaceProducts.objects.get(reference=occurrence.reference),
+            'donation_occurrence': occurrence
+        }
+        products.append(occurrences_dicts)
+    context = {"products": products}
+    return render(request, "shop_car.html", context)
 
-def index_donations(request):
-	list = DonationList.objects.order_by("id")
+def donate_product(request, pk: int, user_id: int):
+    item = DonationList.objects.get(pk=pk)
+    item.donated_by = user_id
+    item.was_donated = True
+    item.save()
+    return index_donations(request, user_id)
 
-	form = DonationList()
-
-	context ={"list":list, "form": form}
-	
-	return render (request, "shopping_list/index.html", context)
-
-
-def completeItem(request, user_id: int, item_id: int):
-	item = DonationList.objects.get(pk=item_id)
-	item.complete = True
-	item.save()
-
-	return (redirect('index'))
-
-
-def deleteItem(request, user_id:int, item_id: int):
-	item = DonationList.objects.get(pk=item_id)
-	item.delete()
-	return redirect('index')
+def delete_item(request, user_id: int, reference: str):
+    item = DonationList.objects.get(user_id=user_id, reference=reference)
+    item.delete()
+    return index_donations(request, user_id)
 
 def deleteAll(request):
-	DonationList.objects.all().delete()
-	return redirect('index')
+    DonationList.objects.all().delete()
+    return redirect('index')

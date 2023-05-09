@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'keyprovide',
         'CLIENT': {
                 'host': 'mongodb+srv://fer:12345@cluster.dpncvxr.mongodb.net/?retryWrites=true&w=majority'
-        }  
+        }
     }
 }
 

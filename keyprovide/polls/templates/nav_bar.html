@@ -51,9 +51,16 @@
                 </form>
             </div>
             <div>
-                <button class="donation_button my-sm-3"><i class="fa fa-folder"></i>
-                    <a href="{% url 'donation_list' user.id %}"> Doações </a>
-                </button>
+                <a href="{% url 'donation_list' user.id %}">
+                    <button class="donation_button my-sm-4" >
+                        <div>
+                            <div>
+                                <img src="https://img.icons8.com/ios/25/null/search-in-list.png">
+                            </div>
+                            Doações
+                        </div> 
+                    </button>
+                </a>
             </div>
         {% endif %}
     </nav>

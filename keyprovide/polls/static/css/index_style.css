@@ -140,3 +140,8 @@ body {
   color: #585858;
   margin: 10px 0;
 }
+
+
+.glyphicon span {
+  font-size: 30px;
+}

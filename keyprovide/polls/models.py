@@ -40,6 +40,14 @@ class DonationList(models.Model):
     was_donated = models.BooleanField(default=False)
     donated_by = models.IntegerField(null=True)
     quantaty = models.IntegerField()
+    list_control_id = models.IntegerField()
     
     def __str__(self):
         return self.description
+
+class DonationListControl(models.Model):
+    closed = models.BooleanField()
+    create_at = models.DateTimeField()
+    updated_at = models.DateTimeField(
+        verbose_name='Updated At',
+        auto_now_add=False, auto_now=True)

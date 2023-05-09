@@ -188,7 +188,6 @@ def index_donations(request, user_id: int):
     list_ = occurrences.filter(user_id=user_id)
     products = list()
     for occurrence in list_:
-        print(occurrence.was_donated)
         occurrences_dicts = {
             'product_occurrence': MarketPlaceProducts.objects.get(reference=occurrence.reference),
             'donation_occurrence': occurrence

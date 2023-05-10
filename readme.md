@@ -19,7 +19,7 @@ Projeto desenvolvido para o terceiro semestre do curso de Desenvolvimento de Sof
   • Utilização do paradigma de programação OO (Object-oriented);<br>
 
 ## Escopo
-Plataforma desenvolvida para criar um catálogo dinâmico integrado de produtos que possui como principal objetivo, se conectar com o sistemas de supermercados, e realizar uma análise de seu estoque e da data de validade dos produtos, em proporção da necessidade apresentado por instituições de caridade, é ofertado acordos com os produtos com as datas de validação mais próximas, assim instigando a população a doar esses produtos que serão desperdiçados a essas instituições, auxiliando há duas causas simultaneamente, o desperdício de alimentos e a fome.
+Plataforma desenvolvida para criar um catálogo dinâmico integrado de produtos que possui como principal objetivo, se conectar com o sistemas de supermercados, e realizar uma análise de seu estoque e da data de validade dos produtos, em proporção da necessidade apresentada pelas instituições de caridade, é ofertado acordos com os produtos com as datas de validade mais próximas, assim instigando a população a doar esses produtos que serão desperdiçados a essas instituições, auxiliando há duas causas simultaneamente, o desperdício de alimentos e a fome.
 
 ## No sistema é possível encontrar:
  •	Estrutura para as entidades que se relacionam no sistema; <br> 
@@ -59,19 +59,16 @@ Plataforma desenvolvida para criar um catálogo dinâmico integrado de produtos 
     </td>
      <td align="center">
       <a href="">
-        <img src="https://avatars.githubusercontent.com/u/102560265?s=400&u=13682d7a6732f419bd58641344fd7e1c33c6bc61&v=4" width="100px;" alt="Leandro"/>
-        <br />
+        <img src="https://avatars.githubusercontent.com/u/102560265?v=4" width="100px;" alt="Leandro"/>
+        <br/>
         <sub>
           <b>Leandro</b>
         </sub>
        </a>
-       <br />
-       <a href="" title="Linkedin"></a>
-       <br />
     </td>
     <td align="center">
       <a href="">
-        <img src="https://avatars.githubusercontent.com/u/102560506?v=4" width="100px;" alt="Luca"/>
+        <img src="https://avatars.githubusercontent.com/u/102560506?v=4" width="100px;" alt="Luiza"/>
         <br/>
         <sub>
           <b>Luiza</b>

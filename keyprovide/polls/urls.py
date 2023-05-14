@@ -14,4 +14,5 @@ urlpatterns = [
     path('donation_list/<str:user_id>', views.index_donations, name='donation_list'),
     path('add_product/<int:user_id>/<str:reference>/<str:quantaty>', views.add_product_list, name='add_product_list'),
     path('donate_product/<int:pk>/<int:user_id>', views.donate_product, name='donate_product'),
+    path("list_institution", views.list_institution, name="list_institution"),
 ]

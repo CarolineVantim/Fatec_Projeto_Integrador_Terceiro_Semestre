@@ -211,3 +211,6 @@ def delete_item(request, user_id: int, reference: str):
 def deleteAll(request):
     DonationList.objects.all().delete()
     return redirect('index')
+
+def list_institution(request):
+    return render(request, "list_institution.html")

@@ -1,4 +1,4 @@
-from django.db import models
+from djongo import models
 
 
 class MarketPlaceProducts(models.Model):
@@ -14,6 +14,7 @@ class MarketPlaceProducts(models.Model):
     price_from = models.FloatField('price_from')
     price_to = models.FloatField('price_to')
     marketplace = models.CharField('marketplace', max_length=200)
+    persuasive_text = models.CharField('persuasive_text', max_length=500, null=True)
     updated_at = models.DateTimeField(
         verbose_name='Updated At',
         auto_now_add=False, auto_now=True)
@@ -40,14 +41,15 @@ class DonationList(models.Model):
     was_donated = models.BooleanField(default=False)
     donated_by = models.IntegerField(null=True)
     quantaty = models.IntegerField()
-    list_control_id = models.IntegerField()
+    list_control_id = models.IntegerField(default=0)
     
     def __str__(self):
         return self.description
 
 class DonationListControl(models.Model):
-    closed = models.BooleanField()
-    create_at = models.DateTimeField()
+    user_id  =  models.IntegerField()
+    closed = models.CharField(default='False', max_length=6)
+    create_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(
         verbose_name='Updated At',
         auto_now_add=False, auto_now=True)

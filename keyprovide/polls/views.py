@@ -1,9 +1,11 @@
 from polls.erps_connections.good_after.libs.good_after_class import SiteGoodAfter
+from polls.erps_connections.openai.connection_class import GenerateAttributesText
 from polls.erps_connections.ndays.libs.ndays_class import SiteNDays
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from storage_non_sequential.storage import MongoConnect
 from django.contrib.auth.models import User, auth
 from polls.models import MarketPlaceProducts
+from .models import DonationListControl
 from django.contrib import messages
 from .models import DonationList
 from polls.forms import UserForm
@@ -174,26 +176,68 @@ def productdetail(request, pk):
     return render(request, 'product.html', {'product': product})
 
 def add_product_list(request, user_id, reference, quantaty: int or None = None):
-    occurrences = DonationList(
-        user_id=user_id,
-        reference=reference,
-        quantaty=quantaty if quantaty else 1)
+    activated_list = DonationListControl.objects.all()
+    filted_list_ = activated_list.filter(user_id=user_id, closed='False')
+    if not len(filted_list_) > 0:
+        filted_list_ = DonationListControl(
+                user_id=user_id, closed='False')
+        filted_list_.save()
+        occurrences = DonationList(
+            user_id=user_id,
+            reference=reference,
+            quantaty=quantaty if quantaty else 1,
+            list_control_id=filted_list_.pk)
+    else:
+        occurrences = DonationList(
+            user_id=user_id,
+            reference=reference,
+            quantaty=quantaty if quantaty else 1,
+            list_control_id=filted_list_[0].pk)
     occurrences.save()
     product = MarketPlaceProducts.objects.get(reference=reference)
     product.description = product.description.replace('\/', '/')
     return render(request, 'product.html', {'product': product})
 
 def index_donations(request, user_id: int):
-    occurrences = DonationList.objects.all()
-    list_ = occurrences.filter(user_id=user_id)
-    products = list()
-    for occurrence in list_:
+    activated_list = DonationListControl.objects.all()
+    filted_list_ = activated_list.filter(user_id=user_id, closed='False')
+    unfilted_lists_ = activated_list.filter(user_id=user_id, closed='True')
+    donation_list = DonationList.objects.all()
+    deactivated_list = list()
+    if len(unfilted_lists_) > 0:
+        for unfilter_list in unfilted_lists_:
+            unfilter_list_donations = donation_list.filter(list_control_id=unfilter_list.pk)
+            deactivated_dict = {
+                'control_id': unfilter_list.pk,
+                'products_count': len(unfilter_list_donations)
+            }
+            deactivated_list.append(deactivated_dict)
+    else:
+        deactivated_list = [{
+                'control_id': False,
+                'products_count': str()
+            }]
+    if len(filted_list_) > 0:
+        filter_list_donations = donation_list.filter(list_control_id=filted_list_[0].pk)
+        products = list()
+        for occurrence in filter_list_donations:
+            occurrences_dicts = {
+                'product_occurrence': MarketPlaceProducts.objects.get(reference=occurrence.reference),
+                'donation_occurrence': occurrence,
+            }
+            control_id = occurrence.list_control_id
+            products.append(occurrences_dicts)
+        context = {"products": products,
+                    "control_id": control_id,
+                    "deactivated_list": deactivated_list}
+    else:
         occurrences_dicts = {
-            'product_occurrence': MarketPlaceProducts.objects.get(reference=occurrence.reference),
-            'donation_occurrence': occurrence
-        }
-        products.append(occurrences_dicts)
-    context = {"products": products}
+            'product_occurrence': 'Adicione itens para ativar uma lista',
+            'donation_occurrence': False
+                }
+        context = {"products": [occurrences_dicts],
+                    "control_id": 0,
+                    "deactivated_list": deactivated_list}
     return render(request, "shop_car.html", context)
 
 def donate_product(request, pk: int, user_id: int):
@@ -208,6 +252,22 @@ def delete_item(request, user_id: int, reference: str):
     item.delete()
     return index_donations(request, user_id)
 
-def deleteAll(request):
-    DonationList.objects.all().delete()
-    return redirect('index')
+def know_about_product(request, reference: str):
+    product = MarketPlaceProducts.objects.get(reference=reference)
+    if product.persuasive_text:
+        return render(request, 'about_product.html', {'product': product})
+    else:
+        object_ai = GenerateAttributesText(True)
+        object_ai.extract_specific_data(str(), product.name)
+        if len(object_ai.results) > 0:
+            product.persuasive_text = object_ai.results
+            product.save()
+            return render(request, 'about_product.html', {'product': product})
+
+def close_list(request, user_id: int, list_control_id: int):
+    activated_list = DonationListControl.objects.get(pk=list_control_id)
+    activated_list.closed = 'True'
+    activated_list.save()
+    return index_donations(request, user_id)
+
+def specific_list(request, list_control_id: int) -> None:

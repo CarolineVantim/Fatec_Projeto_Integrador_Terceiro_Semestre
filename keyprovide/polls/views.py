@@ -271,7 +271,25 @@ def close_list(request, user_id: int, list_control_id: int):
     return index_donations(request, user_id)
 
 def specific_list(request, list_control_id: int) -> None:
-    pass
+    # activated_list = DonationListControl.objects.all()
+    # filted_list_ = activated_list.filter(user_id=user_id, closed='False')
+    # unfilted_lists_ = activated_list.filter(user_id=user_id, closed='True')
+    donation_list = DonationList.objects.all()
+    deactivated_list = list()
+    unfilter_list_donations = donation_list.filter(list_control_id=list_control_id)
+    products = list()
+    for occurrence in unfilter_list_donations:
+        occurrences_dicts = {
+            'product_occurrence': MarketPlaceProducts.objects.get(reference=occurrence.reference),
+            'donation_occurrence': occurrence,
+        }
+        control_id = occurrence.list_control_id
+        products.append(occurrences_dicts)
+    context = {"products": products,
+                "control_id": control_id,
+                "deactivated_list": deactivated_list}
+    return render(request, "shop_car.html", context)
+
 
 def list_institution(request):
     return render(request, "list_institution.html")

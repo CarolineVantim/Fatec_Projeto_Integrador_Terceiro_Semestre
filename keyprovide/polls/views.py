@@ -271,3 +271,7 @@ def close_list(request, user_id: int, list_control_id: int):
     return index_donations(request, user_id)
 
 def specific_list(request, list_control_id: int) -> None:
+    pass
+
+def list_institution(request):
+    return render(request, "list_institution.html")

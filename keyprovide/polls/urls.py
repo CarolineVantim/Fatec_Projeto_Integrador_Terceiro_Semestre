@@ -1,3 +1,4 @@
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 from . import views
 
@@ -19,3 +20,5 @@ urlpatterns = [
     path('close_list/<int:user_id>/<int:list_control_id>', views.close_list, name='close_list'),
     path('specific_list/<int:list_control_id>', views.specific_list, name='specific_list')
 ]
+
+urlpatterns += staticfiles_urlpatterns()

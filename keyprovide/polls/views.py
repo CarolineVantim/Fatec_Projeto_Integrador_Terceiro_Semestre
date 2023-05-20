@@ -257,9 +257,10 @@ def delete_item(request, user_id: int, reference: str):
 def know_about_product(request, reference: str):
     product = MarketPlaceProducts.objects.get(reference=reference)
     if product.persuasive_text:
+        print('SIM')
         return render(request, 'about_product.html', {'product': product})
     else:
-        object_ai = GenerateAttributesText(True)
+        object_ai = GenerateAttributesText(False)
         object_ai.extract_specific_data(str(), product.name)
         if len(object_ai.results) > 0:
             product.persuasive_text = object_ai.results

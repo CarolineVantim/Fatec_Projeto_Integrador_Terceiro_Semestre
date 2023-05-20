@@ -1,6 +1,10 @@
-
+{% load static %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="index">KeyProvide</a>
+        <div class='nav-brand'> 
+         <a href="{% url 'index' %}">
+           <img src='{% static "polls/media/key_provide_logo.png"%}' alt='key_provide_logo' width='100px' height='100px'/> 
+         </a> 
+        </div> 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

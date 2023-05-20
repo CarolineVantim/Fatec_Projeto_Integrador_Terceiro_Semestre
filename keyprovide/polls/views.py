@@ -229,7 +229,8 @@ def index_donations(request, user_id: int):
             products.append(occurrences_dicts)
         context = {"products": products,
                     "control_id": control_id,
-                    "deactivated_list": deactivated_list}
+                    "deactivated_list": deactivated_list,
+                    "can_donate": True}
     else:
         occurrences_dicts = {
             'product_occurrence': 'Adicione itens para ativar uma lista',
@@ -237,7 +238,8 @@ def index_donations(request, user_id: int):
                 }
         context = {"products": [occurrences_dicts],
                     "control_id": 0,
-                    "deactivated_list": deactivated_list}
+                    "deactivated_list": deactivated_list,
+                    "can_donate": False}
     return render(request, "shop_car.html", context)
 
 def donate_product(request, pk: int, user_id: int):
@@ -255,9 +257,10 @@ def delete_item(request, user_id: int, reference: str):
 def know_about_product(request, reference: str):
     product = MarketPlaceProducts.objects.get(reference=reference)
     if product.persuasive_text:
+        print('SIM')
         return render(request, 'about_product.html', {'product': product})
     else:
-        object_ai = GenerateAttributesText(True)
+        object_ai = GenerateAttributesText(False)
         object_ai.extract_specific_data(str(), product.name)
         if len(object_ai.results) > 0:
             product.persuasive_text = object_ai.results
@@ -286,8 +289,9 @@ def specific_list(request, list_control_id: int) -> None:
         control_id = occurrence.list_control_id
         products.append(occurrences_dicts)
     context = {"products": products,
-                "control_id": control_id,
-                "deactivated_list": deactivated_list}
+               "control_id": control_id,
+               "deactivated_list": deactivated_list,
+               "can_donate": False}
     return render(request, "shop_car.html", context)
 
 

@@ -7,16 +7,17 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
  <title> An About Us Page | CoderGirl </title>
  {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-  <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/about_product.css' %}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
   {% include 'nav_bar.html' %}
-  <section class="about-us">
+  <section class="about-product">
     <div class="about">
       <img src="{{product.image}}" class="pic">
       <div class="text">
-        <h2>{{product.name}}}</h2>
+        <h3>{{product.name}}}</h3>
         <h5>Data de Vencimento <span>{{product.expired_date}}</span></h5>
           <p>{{product.persuasive_text}}</p>
         <div class="data">
@@ -26,4 +27,5 @@
     </div>
   </section>
 </body>
+     {% include 'footer.html' %}
 </html>

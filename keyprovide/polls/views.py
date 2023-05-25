@@ -3,14 +3,13 @@ from polls.erps_connections.openai.connection_class import GenerateAttributesTex
 from polls.erps_connections.ndays.libs.ndays_class import SiteNDays
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from storage_non_sequential.storage import MongoConnect
-from django.contrib.auth.models import User, auth
+from django.contrib.auth.models import auth
 from polls.models import MarketPlaceProducts
 from .models import DonationListControl
 from django.contrib import messages
 from .models import DonationList
-from polls.forms import UserForm
-from unidecode import unidecode
-#from polls.models import User
+from .models import User
+from .forms import UserForm
 
 
 
@@ -111,13 +110,9 @@ def register(request):
     user_form = UserForm(request.POST)
     context = {'user_form': user_form}
     if user_form.is_valid():
-        print(user_form.clean_password())
         if request.method == 'POST':
             if user_form.clean_password() == user_form.clean_confirm_password():
-                if User.objects.filter(username=user_form.clean_username()).exists():
-                    messages.info(request, 'Este usuário não está disponível.')
-                    return redirect('registration')
-                elif User.objects.filter(email=user_form.clean_email()).exists():
+                if User.objects.filter(email=user_form.clean_email()).exists():
                     messages.info(request, 'Este email não está disponível.')
                     return redirect('registration')
                 else:
@@ -135,9 +130,9 @@ def register(request):
 
 def login_user(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
-        user = auth.authenticate(username=username, password=password)
+        user = auth.authenticate(email=email, password=password)
         print(user)
         if user is not None:
             auth.login(request, user)

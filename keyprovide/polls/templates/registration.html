@@ -26,28 +26,48 @@
                             </div>
                             <hr />
                             <div class="form-group">
-                                <label for="username">Usuário: </label>
-                                <input type="text" class="form-control" name="username" id="username" placeholder="Usuário" value="{{user_form.username.value}}">
+                                Email:                     
+                                {{ user_form.email }}
                             </div>
                             <div class="form-group">
-                                <label for="first_name">Primeiro Nome:</label>
-                                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Primeiro Nome" value="{{user_form.first_name.value}}">
+                                Nome:
+                                {{ user_form.name }}
                             </div>
                             <div class="form-group">
-                                <label for="last_name">Sobrenome:</label>
-                                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Sobrenome" value="{{user_form.last_name.value}}">
+                            Senha:                     
+                            {{ user_form.password }}
                             </div>
                             <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{user_form.email.value}}">
+                            Confirme a senha:                     
+                            {{ user_form.confirm_password }}
                             </div>
                             <div class="form-group">
-                                <label for="password">Senha:</label>
-                                <input type="password" class="form-control" name="password" id="password" placeholder="Senha">
+                            CNPJ:                     
+                            {{ user_form.cnpj }}
                             </div>
                             <div class="form-group">
-                                <label for="confirm_password">Confirme a senha:</label>
-                                <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirme a senha">
+                            CEP:                     
+                            {{ user_form.cep }}
+                            </div>
+                            <div class="form-group">
+                            Estado:                     
+                            {{ user_form.estado }}
+                            </div>
+                            <div class="form-group">
+                            Cidade:                     
+                            {{ user_form.cidade }}
+                            </div>
+                            <div class="form-group">
+                            Bairro:                     
+                            {{ user_form.bairro }}
+                            </div>
+                            <div class="form-group">
+                            Numero:                     
+                            {{ user_form.num }}
+                            </div>
+                            <div class="form-group">
+                            Juridico:                    
+                             {{ user_form.is_juridico }}
                             </div>
                             <button type="submit" class="btn btn-primary">Cadastrar</button>
                             <a class="btn btn-dark" href="login_user" role="button">Entrar</a>

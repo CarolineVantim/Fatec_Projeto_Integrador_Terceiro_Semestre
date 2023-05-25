@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = "polls.User"
 
 # Application definition
 
@@ -80,7 +81,7 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'keyprovide',
         'CLIENT': {
-                'host': 'mongodb+srv://fer:12345@cluster.dpncvxr.mongodb.net/?retryWrites=true&w=majority'
+                 'host': 'mongodb+srv://fer:12345@cluster.dpncvxr.mongodb.net/?retryWrites=true&w=majority'
         }
     }
 }

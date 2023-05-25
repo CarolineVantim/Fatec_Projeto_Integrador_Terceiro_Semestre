@@ -96,6 +96,7 @@ class SiteGoodAfter(object):
                 if box_product:
                     box_product = box_product.replace('null', "''")
                     box_product = box_product.replace('false', "False")
+                    box_product = box_product.replace('true', "True")
                     try:
                         self.product_dict = eval(box_product)
                         self.try_dict = self.product_dict

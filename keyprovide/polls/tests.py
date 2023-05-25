@@ -1,8 +1,9 @@
+from polls.erps_connections.openai.connection_class import GenerateAttributesText
 from polls.erps_connections.good_after.libs.good_after_class import SiteGoodAfter
-#from polls.erps_connections.super_opa.libs.super_opa_class import SiteSuperOpa
 from polls.erps_connections.ndays.libs.ndays_class import SiteNDays
 from django.test import TestCase
-
+import pathlib
+import openai
 
 class HomeTest(TestCase):
     def setUp(self):
@@ -59,6 +60,7 @@ class ResgistrationTest(TestCase):
 
 class APIGoodAfterTest(TestCase):
     def setUp(self):
+        self.product_link = 'https://goodafter.com/pt/mercearia/13220-35418-oleo-virgem-coco-bio-200ml.html#/25616-consumo_preferencial-2023_04_08_202305181740_3580281930045'
         self.search_goodafter = SiteGoodAfter('food')
         self.search_goodafter.send_search_requisition()
         self.wanted_keys = [
@@ -121,13 +123,11 @@ class APIGoodAfterTest(TestCase):
         self.assertEqual(set(all_json_keys), set(self.wanted_keys))
 
     def test_raising_error(self):
-        product_link = 'https://goodafter.com/pt/mercearia/13049-34868-churruca-picadita-mix-frutos-secos-1kg.html'
         with self.assertRaises(TypeError):
-            self.search_goodafter.send_occurrence_requisition(product_link.replace('https://', str()))
+            self.search_goodafter.send_occurrence_requisition(self.product_link.replace('https://', str()))
 
     def test_second_connection(self):
-        product_link = 'https://goodafter.com/pt/mercearia/13049-34868-churruca-picadita-mix-frutos-secos-1kg.html'
-        self.search_goodafter.send_occurrence_requisition(product_link)
+        self.search_goodafter.send_occurrence_requisition(self.product_link)
         self.assertIn(self.search_goodafter.second_response.status_code, range(200, 300))
 
     def test_occurrence_second_soup(self):
@@ -196,41 +196,54 @@ class APINDaysTest(TestCase):
     def test_occurrence_soup(self) -> None:
         self.assertIsNotNone(self.search_ndays.soup)
 
-
-    #ToDo
-class APISuperOpaTest(TestCase):
+class APIOpenAITest(TestCase):
     def setUp(self) -> None:
-        pass
+        self.openai = GenerateAttributesText(False)
+        self.openai.extract_specific_data('product', 'Desodorante Nívea masculino 50ml')
+        self.wanted_keys = ['id', 'object', 'created', 'model', 'choices', 'usage']
 
     def test_attribute_types(self) -> None:
-        pass
+        self.assertIs(type(self.openai.availiable), bool)
+        self.assertIs(type(self.openai.saving), bool)
+        self.assertIs(type(self.openai.destination), pathlib.WindowsPath)
+        self.assertIs(type(self.openai.statement), str)
 
-    def test_status_code(self) -> None:
-        pass
+    def test_response_object(self) -> None:
+        self.assertIs(type(self.openai.response), openai.openai_object.OpenAIObject)
 
     def test_is_connected(self) -> None:
-        pass
-
-    def test_https_protocol(self) -> None:
-        pass
+        self.assertTrue(self.openai.availiable)
 
     def test_has_occurrences(self) -> None:
-        pass
+        self.assertGreater(len(self.openai.results), 0)
 
     def test_verifing_occurrences(self) -> None:
-        pass
+        self.assertIs(type(self.openai.response.get('choices')), list)
+        self.assertIs(type(self.openai.response.get('id')), str)
+        self.assertIs(type(self.openai.response.get('usage')), openai.openai_object.OpenAIObject)
 
     def test_checking_output_json_keys_count(self) -> None:
-        pass
+        temp_list = list()
+        all_response_keys = list(self.openai.response.keys())
+        for key in self.openai.response.keys():
+            temp_list.append(key in all_response_keys)
+        self.assertEqual(temp_list.count(True), len(self.wanted_keys))
 
     def test_checking_output_json_keys_names(self) -> None:
-        pass
+        self.test_has_occurrences()
+        all_json_keys = list(self.openai.response.keys())
+        self.assertEqual(set(all_json_keys), set(self.wanted_keys))
 
-    def test_raising_error(self) -> None:
-        pass
+    def test_has_right_statement(self) -> None:
+        product = 'Desodorante Nívea masculino'
+        self.assertIn('Escreva uma descrição', self.openai.statement)
+        self.assertIn(product.lower(), self.openai.results.lower())
 
-    def test_second_connection(self) -> None:
-        pass
+    def test_right_models(self) -> None:
+        self.assertEqual(self.openai.response.get('model'), 'text-davinci-003')
+        self.assertEqual(self.openai.response.get('object'), 'text_completion')
 
     def test_occurrence_second_soup(self) -> None:
-        pass
+        self.test_verifing_occurrences()
+        text_response = self.openai.response.get('choices')
+        self.assertIsNotNone(text_response)

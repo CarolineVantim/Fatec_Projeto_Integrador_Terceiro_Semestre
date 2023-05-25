@@ -19,6 +19,7 @@ class SiteNDays(object):
             'due_date_end': day_to if day_to else 30
         }
         self.all_occurrences = list()
+        self.availiable = bool()
 
     def __clean_product_json(self) -> None:
         today = datetime.datetime.now().date()
@@ -87,3 +88,4 @@ class SiteNDays(object):
             self.box_products = self.soup.find_all('div', {'class': 'product-thumb'})
             if len(self.box_products) > 0:
                 self.__extract_attributes_occurrence(self.box_products)
+                self.availiable = True

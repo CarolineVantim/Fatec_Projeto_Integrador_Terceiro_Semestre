@@ -32,6 +32,7 @@ class GenerateAttributesText:
             raise ValueError("The auth key isn't on the credentials JSON")
         self.response = None
         self.availiable = True
+        self.results = str()
 
     def send_requisition(self) -> None:
         if self.statement == '':
@@ -74,7 +75,7 @@ class GenerateAttributesText:
         self.statement = f'{statement["fourth"]}\nlista1 = {self.wanted_date}'
         self.statement = statement['third']
 
-    def extract_specific_data(self, parameter: str, name: str, ):
+    def extract_specific_data(self, parameter: str, name: str):
         self.statement = f'{statement["first"]}{name}'
         self.send_requisition()
         if self.availiable and self.saving:

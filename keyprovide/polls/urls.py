@@ -18,7 +18,8 @@ urlpatterns = [
     path("list_institution", views.list_institution, name="list_institution"),
     path('about_product/<str:reference>', views.know_about_product, name='know_about_product'),
     path('close_list/<int:user_id>/<int:list_control_id>', views.close_list, name='close_list'),
-    path('specific_list/<int:list_control_id>', views.specific_list, name='specific_list')
+    path('specific_list/<int:list_control_id>', views.specific_list, name='specific_list'),
+    path('learn_more', views.learn_more, name='learn_more')
 ]
 
 urlpatterns += staticfiles_urlpatterns()

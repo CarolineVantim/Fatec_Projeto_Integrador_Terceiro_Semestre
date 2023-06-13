@@ -25,7 +25,7 @@
           <div class="intro">
             <h1>KeyProvide</h1>
             <p>Salve um produto e alimente um ser humano.</p>
-            <button>Saiba mais</button>
+            <button > <a href="{% url 'learn_more' %}"> Saiba mais </a></button>
           </div>
           <div class="achievements">
             <div class="work">
@@ -46,21 +46,39 @@
           </div>
           <div class="about-me">
             <div class="about-me-text">
-              <h2>Produtos vencimento 30 Dias</h2>
-              <div class="results">
-                  {% if all_results|length > 0%}
-                      {% for occurrence in all_results %}
-                      <div class="card" style="width: 18rem; display: inline-block;">
-                          <img class="card-img-top" src="{{ occurrence.image }}" alt="Card image cap">
-                          <div class="card-body">
-                              <h5 class="card-title">{{ occurrence.name }}</h5>
-                              <p class="card-text">Data Vencimento: {{ occurrence.expired_date }}</p>
-                              <a href="./product/{{ occurrence.reference }}" class="btn btn-primary">Visualizar Produto</a>
+              {% if user.is_authenticated %}
+                {% if user.is_juridic %}
+                  <h2>Produtos vencimento 30 Dias</h2>
+                  <div class="results">
+                      {% if all_results|length > 0%}
+                          {% for occurrence in all_results %}
+                          <div class="card" style="width: 18rem; display: inline-block;">
+                              <img class="card-img-top" src="{{ occurrence.image }}" alt="Card image cap">
+                              <div class="card-body">
+                                  <h5 class="card-title">{{ occurrence.name }}</h5>
+                                  <p class="card-text">Data Vencimento: {{ occurrence.expired_date }}</p>
+                                  <a href="./product/{{ occurrence.reference }}" class="btn btn-primary">Visualizar Produto</a>
+                              </div>
                           </div>
-                      </div>
-                      {% endfor %}
-                  {% endif %}
-              </div>
+                          {% endfor %}
+                      {% endif %}
+                  </div>
+                {% else %}
+                  <div class="results">
+                      {% if need_donation|length > 0%}
+                          {% for occurrence in need_donation %}
+                          <div class="card" style="width: 18rem; display: inline-block;">
+                              <img class="card-img-top" src="{{ occurrence.image }}" alt="Card image cap">
+                              <div class="card-body">
+                                  <h5 class="card-title">Instituição {{ occurrence.corporation }}</h5>
+                                  <p class="card-text">Quantidade de Produtos {{ occurrence.products_count }}</p>
+                                  <a href="./specific_list/{{ occurrence.user_list_id }}" class="btn btn-primary">Visualizar Lista</a>
+                              </div>
+                          </div>
+                          {% endfor %}
+                      {% endif %}
+                {% endif %}
+              {% endif %}
             </div>
           </div>
         </main>

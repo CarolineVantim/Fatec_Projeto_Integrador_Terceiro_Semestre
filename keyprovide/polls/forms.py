@@ -1,27 +1,17 @@
 from django import forms
 
 class UserForm(forms.Form):
-    email = forms.CharField(label= "Email", max_length=50)
-    email.widget = forms.TextInput(attrs={'class': 'form-control'})
-    password = forms.CharField(label= "Senha", max_length=50, widget=forms.PasswordInput())
-    password.widget = forms.TextInput(attrs={'class': 'form-control', 'type': 'password'})
-    confirm_password = forms.CharField(label= "Confirme sua senha", max_length=50)
-    confirm_password.widget = forms.TextInput(attrs={'class': 'form-control', 'type': 'password'})
-    name = forms.CharField(label="Nome", max_length=100)
-    name.widget = forms.TextInput(attrs={'class': 'form-control'})
-    cnpj = forms.CharField(label="CNPJ", max_length=14)
-    cnpj.widget = forms.TextInput(attrs={'class': 'form-control'})
-    cep = forms.CharField(label="CEP", max_length=9)
-    cep.widget = forms.TextInput(attrs={'class': 'form-control'})
-    num = forms.IntegerField(label="Numero")
-    num.widget = forms.TextInput(attrs={'class': 'form-control'})
-    bairro = forms.CharField(label="Bairro", max_length=100)
-    bairro.widget = forms.TextInput(attrs={'class': 'form-control'})
-    cidade = forms.CharField(label="Cidade", max_length=100)
-    cidade.widget = forms.TextInput(attrs={'class': 'form-control'})
-    estado = forms.CharField(label="Estado", max_length=2)
-    estado.widget = forms.TextInput(attrs={'class': 'form-control'})
-    is_juridico = forms.BooleanField()
+    email = forms.CharField(label= "email", max_length=50)
+    password = forms.CharField(label= "password", max_length=50, widget=forms.PasswordInput())
+    confirm_password = forms.CharField(label= "confirm_password", max_length=50, widget=forms.PasswordInput())
+    name = forms.CharField(label="name", max_length=100)
+    cnpj = forms.CharField(label="cnpj", max_length=14, required=False)
+    cep = forms.CharField(label="cep", max_length=9)
+    number = forms.IntegerField(label="number")
+    block = forms.CharField(label="block", max_length=100)
+    city = forms.CharField(label="city", max_length=100)
+    state = forms.CharField(label="state", max_length=20)
+    is_juridic = forms.BooleanField(label="is_juridic")
 
     def clean_password(self):
         password = self.cleaned_data['password']

@@ -18,56 +18,55 @@
             {% include 'nav_bar.html' %}
             <div class="div-center">
                 <div class="content">
-                    <form action="register" method="POST">
+                    <form action="{% url 'registration' %}" method="POST">
                         {% csrf_token%}
-                        <div class="mx-auto" style="width: 400px;">
+                        <div class="mx-auto" style="width: 500px;">
                             <div class="col-xs-8 col-xs-offset-4">
                                 <h2 style="text-align:center;">Registrar</h2>
                             </div>
                             <hr />
                             <div class="form-group">
-                                Email:                     
-                                {{ user_form.email }}
+                                <label for="email">Email: </label>
+                                <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{user_form.email.value}}">
                             </div>
                             <div class="form-group">
-                                Nome:
-                                {{ user_form.name }}
+                                <label for="name">Nome: </label>
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Usuário" value="{{user_form.name.value}}">
                             </div>
                             <div class="form-group">
-                            Senha:                     
-                            {{ user_form.password }}
+                                <label for="password">Senha: </label>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Senha" value="{{user_form.password.value}}">
                             </div>
                             <div class="form-group">
-                            Confirme a senha:                     
-                            {{ user_form.confirm_password }}
+                                <label for="confirm_password">Confirmar a Senha: </label>
+                                <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirme a Senha" value="{{user_form.confirm_password.value}}">
                             </div>
                             <div class="form-group">
-                            CNPJ:                     
-                            {{ user_form.cnpj }}
+                                <label for="cnpj">CNPJ: </label>
+                                <input type="text" class="form-control" name="cnpj" id="cnpj" placeholder="CNPJ" value="{{user_form.cnpj.value}}">
                             </div>
                             <div class="form-group">
-                            CEP:                     
-                            {{ user_form.cep }}
+                                <label for="cep">CEP: </label>
+                                <input type="text" class="form-control" name="cep" id="cep" placeholder="CEP" value="{{user_form.cep.value}}">
                             </div>
                             <div class="form-group">
-                            Estado:                     
-                            {{ user_form.estado }}
+                                <label for="state">Estado: </label>
+                                <input type="text" class="form-control" name="state" id="state" placeholder="Estado" value="{{user_form.state.value}}">
                             </div>
                             <div class="form-group">
-                            Cidade:                     
-                            {{ user_form.cidade }}
+                                <label for="city">Cidade: </label>
+                                <input type="text" class="form-control" name="city" id="city" placeholder="Cidade" value="{{user_form.city.value}}">
                             </div>
                             <div class="form-group">
-                            Bairro:                     
-                            {{ user_form.bairro }}
+                                <label for="block">Bairro: </label>
+                                <input type="text" class="form-control" name="block" id="block" placeholder="Bairro" value="{{user_form.block.value}}">
                             </div>
                             <div class="form-group">
-                            Numero:                     
-                            {{ user_form.num }}
+                                <label for="number">Número: </label>
+                                <input type="text" class="form-control" name="number" id="number" placeholder="Número" value="{{user_form.number.value}}">
                             </div>
                             <div class="form-group">
-                            Juridico:                    
-                             {{ user_form.is_juridico }}
+                                <label for="is_juridic">Jurídico: {{user_form.is_juridic}} </label>
                             </div>
                             <button type="submit" class="btn btn-primary">Cadastrar</button>
                             <a class="btn btn-dark" href="login_user" role="button">Entrar</a>
@@ -78,7 +77,9 @@
                     </form>
                 </div>
             </div>
+            {% include 'footer.html' %}
         </div>
+        
         <div class="form-group">
             {% for message in messages %}
             <div class="alert alert-danger" role="alert">
@@ -88,4 +89,5 @@
         </div>
 
     </body>
+
 </html>

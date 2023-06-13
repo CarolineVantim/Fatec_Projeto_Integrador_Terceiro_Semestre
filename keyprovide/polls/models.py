@@ -53,11 +53,11 @@ class User(AbstractBaseUser):
     name = models.CharField('name', max_length=100, default="Não informado")
     cnpj = models.CharField('cnpj', max_length=14, blank=True)
     cep = models.CharField('cep', max_length=9, default="000000-000")
-    num = models.IntegerField('num', default=000)
-    bairro = models.CharField('bairro', max_length=100, default="Nao informado")
-    cidade = models.CharField('cidade', max_length=100, default="Nao informado")
-    estado = models.CharField('estado', max_length=2, default="NA")
-    is_juridico = models.BooleanField(default=False)
+    number = models.IntegerField('number', default=000)
+    block = models.CharField('block', max_length=100, default="Não informado")
+    city = models.CharField('city', max_length=100, default="Não informado")
+    state = models.CharField('state', max_length=2, default="NA")
+    is_juridic = models.BooleanField(default=False)
     
     USERNAME_FIELD = 'email'
     

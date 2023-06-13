@@ -107,10 +107,12 @@ def check_occurrence(term: str, marketplace: str) -> dict[str: str]:
     return {"all_results": {}}
 
 def register(request):
-    user_form = UserForm(request.POST)
-    context = {'user_form': user_form}
-    if user_form.is_valid():
-        if request.method == 'POST':
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        print(user_form.is_valid())
+        print(user_form.cleaned_data)
+        if user_form.is_valid():
+            context = {'user_form': user_form}
             if user_form.clean_password() == user_form.clean_confirm_password():
                 if User.objects.filter(email=user_form.clean_email()).exists():
                     messages.info(request, 'Este email não está disponível.')
@@ -124,8 +126,25 @@ def register(request):
                 messages.info(request, 'Senhas não coincidem.')
                 return redirect('registration')
         else:
-            return render(request, 'registration.html')
+            context = {'user_form': user_form}
+            return render(request, 'registration.html', context)
     else:
+        model_user = {
+            'email': str(),
+            'name': str(),
+            'password': str(),
+            'confirm_password': str(),
+            'name': str(),
+            'cnpj': str(),
+            'cep': str(),
+            'number': str(),
+            'block': str(),
+            'city': str(),
+            'state': str(),
+            'is_juridic': bool(),
+        }
+        user_form = UserForm(model_user)
+        context = {'user_form': user_form}
         return render(request, 'registration.html', context)
 
 def login_user(request):
@@ -147,7 +166,22 @@ def index(request):
     search_ndays = SiteNDays()
     search_ndays.send_search_requisition()
     saving_marketplace_occurrences(search_ndays.all_occurrences)
-    return render(request, "index.html", {"all_results": search_ndays.all_occurrences})
+    all_activated_lists = DonationListControl.objects.all()
+    filted_list_ = all_activated_lists.filter(closed='False')
+    need_donation_list = list()
+    if len(filted_list_) > 0:
+        all_products_occurrences = DonationList.objects.all()
+        for activated_list in filted_list_:
+            specific_list = all_products_occurrences.filter(list_control_id=activated_list.pk)
+            corporation = User.objects.get(pk=activated_list.user_id)
+            full_list_information = {
+                'user_list_id': activated_list.id,
+                'products_count': len(specific_list),
+                'corporation': corporation.name
+            }
+            need_donation_list.append(full_list_information)
+    return render(request, "index.html", {"all_results": search_ndays.all_occurrences,
+                                        "need_donation": need_donation_list})
 
 def home(request, term: str or None = None):
     term = request.GET.get('lookup')
@@ -169,6 +203,9 @@ def productdetail(request, pk):
     product = MarketPlaceProducts.objects.get(reference=pk)
     product.description = product.description.replace('\/', '/')
     return render(request, 'product.html', {'product': product})
+
+def learn_more(request):
+    return render(request, 'learn_more.html')
 
 def add_product_list(request, user_id, reference, quantaty: int or None = None):
     activated_list = DonationListControl.objects.all()

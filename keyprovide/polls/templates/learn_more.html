@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+        integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+        crossorigin="anonymous"></script>
+    <title>Key Provide</title>
+
+</head>
+
+    <body>
+        {% include 'nav_bar.html' %}
+        <br> <br>
+        <div class="containerr">
+            <h1 class="first_title">Seja um dos pontos Chaves na luta conta Fome.</h1>
+
+            <img class="sheel" src='{% static "polls/media/logo_gif.gif" %}' alt="" height="380px">
+        </div>
+        <br><br>
+        <div class="section1">
+            <img class="logo_west" src='{% static "polls/media/food_west.jpg" %}' height="380px">
+            <h1 class="logo_gif_explanation">Doe um alimento próximo do vencimento para alguém que precise dele de imediato</h1>
+        </div>
+        <br><br>
+        <div class="section2 ">
+            <h1 class="second_title ">Identifique instituições que mais necessitam e os produtos com prazo mais curto</h1>
+            <img class="scan" src='{% static "polls/media/food_donationvif.jpg" %}' alt="" width="300px" height="300px">
+        </div>
+        <br> <br>
+        <div class="section3">
+            <img class="social" src='{% static "polls/media/food_weist.jpg" %}' height="350px">
+            <h1 class="texto2">Contribua diretamente com a diminuição do desperdício de alimentos </h1>
+        </div>
+        <br><br><br>
+        {% include 'footer.html' %}
+    </body>
+</html>

@@ -25,14 +25,22 @@
                 <p class="mb-1"> Histórico de {{deactivated_list|length}} listas passadas</p>
               </a>
                 {% for deactivated in deactivated_list%}
-                  <a href="{% url 'specific_list' deactivated.control_id%}" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">
-                            Lista {{deactivated.control_id}} 
-                    </h5>
-                    </div>
-                    <p class="mb-1">Quantidade produtos: {{ deactivated.products_count }}</p>
-                  </a>
+                    {% if not deactivated.control_id %}
+                        <div class="d-flex w-100 justify-content-between">
+                          <h5 class="mb-1">
+                                Nenhuma lista anterior
+                        </h5>
+                        </div>
+                    {% else %}
+                      <a href="{% url 'specific_list' deactivated.control_id%}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                          <h5 class="mb-1">
+                                Lista {{deactivated.control_id}} 
+                        </h5>
+                        </div>
+                        <p class="mb-1">Quantidade produtos: {{ deactivated.products_count }}</p>
+                      </a>
+                    {% endif %}
                 {% endfor %}
         </div>
         <div class="container">

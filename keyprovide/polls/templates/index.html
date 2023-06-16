@@ -68,11 +68,11 @@
                       {% if need_donation|length > 0%}
                           {% for occurrence in need_donation %}
                           <div class="card" style="width: 18rem; display: inline-block;">
-                              <img class="card-img-top" src="{{ occurrence.image }}" alt="Card image cap">
+                              <img class="card-img-top" src="https://www.gazetadopovo.com.br/instituto-politeia/wp-content/uploads/2018/12/education-295185_1280-1024x1024.png" alt="Card image cap">
                               <div class="card-body">
-                                  <h5 class="card-title">Instituição {{ occurrence.corporation }}</h5>
+                                  <h5 class="card-title">Lista Instituição {{ occurrence.corporation }}</h5>
                                   <p class="card-text">Quantidade de Produtos {{ occurrence.products_count }}</p>
-                                  <a href="./specific_list/{{ occurrence.user_list_id }}" class="btn btn-primary">Visualizar Lista</a>
+                                  <a href="./specific_list/{{ occurrence.user_list_id }}/{{ user.id }}" class="btn btn-primary">Visualizar Lista</a>
                               </div>
                           </div>
                           {% endfor %}

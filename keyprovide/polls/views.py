@@ -305,7 +305,7 @@ def close_list(request, user_id: int, list_control_id: int):
     activated_list.save()
     return index_donations(request, user_id)
 
-def specific_list(request, list_control_id: int) -> None:
+def specific_list(request, list_control_id: int, user_id: int) -> None:
     # activated_list = DonationListControl.objects.all()
     # filted_list_ = activated_list.filter(user_id=user_id, closed='False')
     # unfilted_lists_ = activated_list.filter(user_id=user_id, closed='True')
@@ -319,11 +319,14 @@ def specific_list(request, list_control_id: int) -> None:
             'donation_occurrence': occurrence,
         }
         control_id = occurrence.list_control_id
+        user_id_list = occurrence.user_id
         products.append(occurrences_dicts)
-    context = {"products": products,
-               "control_id": control_id,
-               "deactivated_list": deactivated_list,
-               "can_donate": False}
+    context = {
+        "products": products,
+        "control_id": control_id,
+        "deactivated_list": deactivated_list,
+        "can_donate": False if user_id_list == user_id else True
+    }
     return render(request, "shop_car.html", context)
 
 

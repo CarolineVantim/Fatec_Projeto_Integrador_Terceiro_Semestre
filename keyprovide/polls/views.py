@@ -106,13 +106,33 @@ def check_occurrence(term: str, marketplace: str) -> dict[str: str]:
             return {"all_results": search_goodafter.all_occurrences}
     return {"all_results": {}}
 
-def register(request):
+
+def register_choice(request):
     if request.method == 'POST':
-        user_form = UserForm(request.POST)
+        tipo_usuario = request.POST.get('tipo_usuario')
+
+        if tipo_usuario == 'fisico':
+            return redirect('registration', tipo_usuario='fisico')
+        elif tipo_usuario == 'juridico':
+            return redirect('registration', tipo_usuario='juridico')
+
+    return render(request, 'registration_choice.html')
+
+
+def register(request, tipo_usuario):
+    if request.method == 'POST':
+        if tipo_usuario=='fisico':
+            valor = False
+        else:
+            valor = True
+        post_data = request.POST.copy()  # Cria uma cópia mutável do objeto QueryDict
+        user_form = UserForm(post_data)
+        user_form.data['is_juridic'] = valor
+        user_form = UserForm(post_data)
         print(user_form.is_valid())
         print(user_form.cleaned_data)
         if user_form.is_valid():
-            context = {'user_form': user_form}
+            context = {'user_form': user_form, 'tipo_usuario': tipo_usuario}
             if user_form.clean_password() == user_form.clean_confirm_password():
                 if User.objects.filter(email=user_form.clean_email()).exists():
                     messages.info(request, 'Este email não está disponível.')
@@ -126,7 +146,7 @@ def register(request):
                 messages.info(request, 'Senhas não coincidem.')
                 return redirect('registration')
         else:
-            context = {'user_form': user_form}
+            context = {'user_form': user_form, 'tipo_usuario': tipo_usuario}
             return render(request, 'registration.html', context)
     else:
         model_user = {
@@ -144,7 +164,7 @@ def register(request):
             'is_juridic': bool(),
         }
         user_form = UserForm(model_user)
-        context = {'user_form': user_form}
+        context = {'user_form': user_form, 'tipo_usuario': tipo_usuario}
         return render(request, 'registration.html', context)
 
 def login_user(request):

@@ -11,7 +11,7 @@ class UserForm(forms.Form):
     block = forms.CharField(label="block", max_length=100)
     city = forms.CharField(label="city", max_length=100)
     state = forms.CharField(label="state", max_length=20)
-    is_juridic = forms.BooleanField(label="is_juridic")
+    is_juridic = forms.BooleanField(label="is_juridic", required=False)
 
     def clean_password(self):
         password = self.cleaned_data['password']

@@ -18,7 +18,7 @@
             {% include 'nav_bar.html' %}
             <div class="div-center">
                 <div class="content">
-                    <form action="{% url 'registration' %}" method="POST">
+                    <form method="POST">
                         {% csrf_token%}
                         <div class="mx-auto" style="width: 500px;">
                             <div class="col-xs-8 col-xs-offset-4">
@@ -41,10 +41,14 @@
                                 <label for="confirm_password">Confirmar a Senha: </label>
                                 <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirme a Senha" value="{{user_form.confirm_password.value}}">
                             </div>
+                            {% if tipo_usuario == 'juridico' %}
                             <div class="form-group">
                                 <label for="cnpj">CNPJ: </label>
                                 <input type="text" class="form-control" name="cnpj" id="cnpj" placeholder="CNPJ" value="{{user_form.cnpj.value}}">
                             </div>
+                            {% else %}
+                                <input type="hidden" class="form-control" name="{{user_form.cnpj.name}}" id="cnpj" placeholder="CNPJ" value="">
+                            {% endif %}
                             <div class="form-group">
                                 <label for="cep">CEP: </label>
                                 <input type="text" class="form-control" name="cep" id="cep" placeholder="CEP" value="{{user_form.cep.value}}">
@@ -65,9 +69,6 @@
                                 <label for="number">Número: </label>
                                 <input type="text" class="form-control" name="number" id="number" placeholder="Número" value="{{user_form.number.value}}">
                             </div>
-                            <div class="form-group">
-                                <label for="is_juridic">Jurídico: {{user_form.is_juridic}} </label>
-                            </div>
                             <button type="submit" class="btn btn-primary">Cadastrar</button>
                             <a class="btn btn-dark" href="login_user" role="button">Entrar</a>
                                     </div>
@@ -77,7 +78,6 @@
                     </form>
                 </div>
             </div>
-            {% include 'footer.html' %}
         </div>
         
         <div class="form-group">

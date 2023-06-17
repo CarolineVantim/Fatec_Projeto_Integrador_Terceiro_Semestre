@@ -51,13 +51,13 @@ class User(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
     name = models.CharField('name', max_length=100, default="Não informado")
-    cnpj = models.CharField('cnpj', max_length=14, blank=True)
+    cnpj = models.CharField('cnpj', max_length=14, null=True)
     cep = models.CharField('cep', max_length=9, default="000000-000")
     number = models.IntegerField('number', default=000)
     block = models.CharField('block', max_length=100, default="Não informado")
     city = models.CharField('city', max_length=100, default="Não informado")
     state = models.CharField('state', max_length=2, default="NA")
-    is_juridic = models.BooleanField(default=False)
+    is_juridic = models.BooleanField(default=False, null=True)
     
     USERNAME_FIELD = 'email'
     

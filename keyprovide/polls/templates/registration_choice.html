@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <title>Cadastro</title>
+    </head>
+    <body>
+        <div class="back">
+            {% include 'nav_bar.html' %}
+            <div class="div-center">
+                <div class="content">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="btn-group d-flex justify-content-between" data-toggle="buttons">
+                            <label class="btn btn-primary">
+                                <input type="radio" name="tipo_usuario" id="fisico" value="fisico"> Usuário Físico
+                            </label>
+                            <label class="btn btn-primary">
+                                <input type="radio" name="tipo_usuario" id="juridico" value="juridico"> Usuário Jurídico
+                            </label>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Continuar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{message}}
+            </div>
+            {% endfor %}
+        </div>
+
+    </body>
+
+</html>

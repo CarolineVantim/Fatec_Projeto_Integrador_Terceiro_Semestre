@@ -31,7 +31,7 @@
                         </h5>
                         </div>
                     {% else %}
-                      <a href="{% url 'specific_list' deactivated.control_id%}" class="list-group-item list-group-item-action">
+                      <a href="{% url 'specific_list' deactivated.control_id user.id %}" class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
                           <h5 class="mb-1">
                                 Lista {{deactivated.control_id}} 

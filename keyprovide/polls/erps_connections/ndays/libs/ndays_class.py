@@ -20,6 +20,10 @@ class SiteNDays(object):
         }
         self.all_occurrences = list()
         self.availiable = bool()
+        self.possible_request_error = (requests.exceptions.ConnectTimeout,
+                                        requests.exceptions.SSLError,
+                                        requests.exceptions.ConnectionError,
+                                        requests.exceptions.ReadTimeout)
 
     def __clean_product_json(self) -> None:
         today = datetime.datetime.now().date()
@@ -79,10 +83,14 @@ class SiteNDays(object):
             'due_date_begin': day_from,
             'due_date_end': day_to
         }
-        self.response = requests.get(
-            'https://www.ndays.com.br/index.php?route=product/seller',
-            headers=self.headers,
-            params=self.params)
+        try:
+            self.response = requests.get(
+                'https://www.ndays.com.br/index.php?route=product/seller',
+                headers=self.headers,
+                params=self.params)
+        except self.possible_request_error:
+            self.availiable = False
+            return
         if self.response.status_code in range(200, 300):
             self.soup = BeautifulSoup(self.response.text, 'html.parser')
             self.box_products = self.soup.find_all('div', {'class': 'product-thumb'})

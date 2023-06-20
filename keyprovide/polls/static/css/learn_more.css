@@ -1,0 +1,130 @@
+body {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.containerr {
+    display: flex;
+    align-items: center;
+    height: 390px;
+
+}
+
+.first_title {
+    color: rgb(95, 59, 43);
+    text-align: left;
+    width: 400px;
+    font-size: 50px;
+    font-family: 'Quicksand', sans-serif;
+    position: absolute;
+    left: calc(100% - 70% - 200px);
+
+}
+
+.sheel {
+    border-radius: 0px;
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    left: calc(100% - 45% - 190px);
+
+
+}
+
+.section1 {
+    display: flex;
+    align-items: center;
+    background-color: rgb(240, 244, 243);
+    height: 500px;
+
+}
+
+.logo_west {
+    height: 50%;
+    width: 50%;
+    position: absolute;
+    left: calc(100% - 75% - 190px);
+}
+
+.logo_gif_explanation {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 40px;
+    width: 400px;
+    position: absolute;
+    left: calc(100% - 25% - 200px);
+}
+
+.section2 {
+    display: flex;
+    align-items: center;
+    height: 300px;
+}
+
+.scan {
+    height: 35%;
+    width: 35%;
+    border-radius: 25%;
+    position: absolute;
+    left: calc(100% - 45% - 150px);
+}
+
+.second_title {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 40px;
+    width: 400px;
+    position: absolute;
+    left: calc(100% - 70% - 200px);
+}
+
+.section3{
+    display: flex;
+    align-items: center;
+    height: 350px;
+    background-color: rgb(240, 244, 243);
+}
+
+.social{
+    height: 35%;
+    width: 35%;
+    border-radius: 25%;
+    position: absolute;
+    position: absolute;
+    left: calc(100% - 75% - 175px);
+}
+
+.texto2{
+    font-family: 'Quicksand', sans-serif;
+    font-size: 40px;
+    width: 400px;
+    position: absolute;
+    left: calc(100% - 25% - 200px);
+}
+
+.categ{
+    background-color: rgb(3, 89, 64);
+    color:white;
+}
+
+.bodylogin{
+    width: 100vw;
+    height: 100vh;
+    background-image: url(./_img/login2.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.pcards{
+    font-size: 30px;
+}
+
+
+
+.bordacirc{
+    border-radius: 10px;
+}
+
+
+
+.body-content{
+    /** altura do rodapé tem que ser igual a isso aqui e vice-versa **/
+  padding-bottom: 30px;
+}

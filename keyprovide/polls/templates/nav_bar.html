@@ -1,8 +1,7 @@
 {% load static %}
     <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <div class='nav-brand'>
-                <a class="navbar-brand" href="{% url 'index' %}">KeyProvider</a>
+            <div class="nav-brand">
+                <a class="navbar-brand" href="{% url 'index' %}">KeyProvide</a>
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,9 +9,10 @@
             <style type="text/css">
                 .navbar {
                     background-color: #03507E;
+                    border-radius: 0;
                 }
                 a {
-                    color: aliceblue;
+                    color: #fff;
                 }
                 .navbar-nav {
                     margin-left: auto;
@@ -118,5 +118,4 @@
                     </a>
                 </div>
             {% endif %}
-        </div>
     </nav>

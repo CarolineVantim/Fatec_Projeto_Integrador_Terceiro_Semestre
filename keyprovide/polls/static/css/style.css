@@ -108,7 +108,6 @@ body{
     display: flex;
     align-items: center;
     height: 390px;
-    
 
 }
 
@@ -124,7 +123,6 @@ body{
 }
 
 .sheel {
-    
     border-radius: 0px;
     width: 50%;
     height: 50%;
@@ -147,8 +145,6 @@ body{
     width: 50%;
     position: absolute;
     left: calc(100% - 75% - 190px);
-    
-    
 }
 
 .logo_gif_explanation {

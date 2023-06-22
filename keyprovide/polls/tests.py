@@ -13,7 +13,7 @@ class HomeTest(TestCase):
         self.assertEqual(self.response.status_code, 200)
 
     def test_text(self):
-        self.assertContains(self.response, 'Entrar')
+        self.assertContains(self.response, 'Login')
 
     def test_templates_home(self):
         self.assertTemplateUsed(self.response, 'home.html')
@@ -27,7 +27,7 @@ class LoginTest(TestCase):
         self.assertEqual(self.response.status_code, 200)
 
     def test_text(self):
-        self.assertContains(self.response, 'Entrar')
+        self.assertContains(self.response, 'Log In')
 
     def test_templates_home(self):
         self.assertTemplateUsed(self.response, 'login_user.html')
@@ -46,13 +46,13 @@ class LogoutTest(TestCase):
 
 class ResgistrationTest(TestCase):
     def setUp(self):
-        self.response = self.client.get('/register')
+        self.response = self.client.get('/register/juridico/')
 
     def test_200_response(self):
         self.assertEqual(self.response.status_code, 200)
 
     def test_text(self):
-        self.assertContains(self.response, 'Cadastrar')
+        self.assertContains(self.response, 'Registrar')
 
     def test_templates_home(self):
         self.assertTemplateUsed(self.response, 'registration.html')
@@ -60,7 +60,7 @@ class ResgistrationTest(TestCase):
 
 class APIGoodAfterTest(TestCase):
     def setUp(self):
-        self.product_link = 'https://goodafter.com/pt/mercearia/13220-35418-oleo-virgem-coco-bio-200ml.html#/25616-consumo_preferencial-2023_04_08_202305181740_3580281930045'
+        self.product_link = 'https://goodafter.com/pt/bebidas/11867-31830-casal-garcia-vinho-verde-branco-250ml.html#/23558-consumo_preferencial-2023_03_04_202206221458_5601096012721'
         self.search_goodafter = SiteGoodAfter('food')
         self.search_goodafter.send_search_requisition()
         self.wanted_keys = [
@@ -235,7 +235,7 @@ class APIOpenAITest(TestCase):
         self.assertEqual(set(all_json_keys), set(self.wanted_keys))
 
     def test_has_right_statement(self) -> None:
-        product = 'Desodorante Nívea masculino'
+        product = 'Desodorante'
         self.assertIn('Escreva uma descrição', self.openai.statement)
         self.assertIn(product.lower(), self.openai.results.lower())
 

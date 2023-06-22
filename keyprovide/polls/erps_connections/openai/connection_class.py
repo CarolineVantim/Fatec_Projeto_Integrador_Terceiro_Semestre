@@ -37,12 +37,24 @@ class GenerateAttributesText:
     def send_requisition(self) -> None:
         if self.statement == '':
             raise ValueError('The statement is empty!')
-        self.response = self.session_openai.Completion.create(
-            model="text-davinci-003",
-            prompt = self.statement,
-            temperature=0.5,
-            max_tokens=3500,
-        )
+        counter = 1
+        while True:
+            try:
+                self.response = self.session_openai.Completion.create(
+                    model="text-davinci-003",
+                    prompt = self.statement,
+                    temperature=0.5,
+                    max_tokens=3500,
+                )
+                break
+            except openai.error.APIError:
+                counter += 1
+                if counter > 5:
+                    print('API out of reach')
+                    break
+                else:
+                    print(f'Trying again for the {counter} time')
+
         if self.response.choices[0]['finish_reason'] != 'stop':
             self.reason = self.response.choices[0]['finish_reason']
             self.availiable = False

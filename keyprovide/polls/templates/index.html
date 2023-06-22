@@ -44,6 +44,18 @@
               <p class="work-text">Auxiliar um problema estrutural e fundamental o ser humano, a fome. Colaboração de insumos a instituições de caridade</p>
             </div>
           </div>
+          <div class="achievements">
+            <div class="work">
+              <i class="fas fa-atom"></i>
+              <p class="work-heading">Instituicoes cadastradas</p>
+              <h1 style="color: #E86100;"> {{ institutions }}</h1>
+            </div>
+            <div class="work">
+              <i class="fas fa-skiing"></i>
+              <p class="work-heading">Doacoes feitas</p>
+              <h1 style="color: #E86100;">{{ donations }}</h1>
+            </div>
+          </div>
           <div class="about-me">
             <div class="about-me-text">
               {% if user.is_authenticated %}

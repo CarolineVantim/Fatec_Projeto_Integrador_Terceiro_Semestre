@@ -1,4 +1,5 @@
 from djongo import models
+from djongo.models import DjongoManager
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
@@ -62,6 +63,7 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     
     objects = UserManager()
+    djongo_objects = DjongoManager()
     
     def has_perm(self, perm, obj=None):
         return self.is_superuser
@@ -79,6 +81,8 @@ class DonationList(models.Model):
     donated_by = models.IntegerField(null=True)
     quantaty = models.IntegerField()
     list_control_id = models.IntegerField(default=0)
+    objects = models.Manager()
+    djongo_objects = DjongoManager()
     
     def __str__(self):
         return self.description

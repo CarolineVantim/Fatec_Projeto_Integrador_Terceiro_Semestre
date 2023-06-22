@@ -10,6 +10,7 @@ from django.contrib import messages
 from .models import DonationList
 from .models import User
 from .forms import UserForm
+from django.db.models import Count
 
 
 
@@ -183,6 +184,23 @@ def login_user(request):
         return render(request, 'login_user.html')
 
 def index(request):
+    pipeline = [
+        {"$match": {"is_juridic": True}},
+        {"$group": {"_id": None, "count": {"$sum": 1}}}
+    ]
+
+    resultinstitutions = User.djongo_objects.mongo_aggregate(pipeline)
+    institutions = resultinstitutions.next().get('count', 0)
+
+    pipeline = [
+        {"$match": {"was_donated": True}},
+        {"$group": {"_id": None, "count": {"$sum": 1}}}
+    ]
+
+    resultdonations = DonationList.djongo_objects.mongo_aggregate(pipeline)
+    donations = resultdonations.next().get('count', 0)
+
+
     search_ndays = SiteNDays()
     search_ndays.send_search_requisition()
     saving_marketplace_occurrences(search_ndays.all_occurrences)
@@ -201,7 +219,7 @@ def index(request):
             }
             need_donation_list.append(full_list_information)
     return render(request, "index.html", {"all_results": search_ndays.all_occurrences,
-                                        "need_donation": need_donation_list})
+                                        "need_donation": need_donation_list, "institutions": institutions, "donations": donations})
 
 def home(request, term: str or None = None):
     term = request.GET.get('lookup')

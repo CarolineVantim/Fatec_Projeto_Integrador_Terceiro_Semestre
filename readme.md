@@ -4,6 +4,7 @@
 # Projeto Integrador - KeyProvide 🍽️
 Projeto desenvolvido para o terceiro semestre do curso de Desenvolvimento de Software Multiplataformas
 
+
 [![NPM](https://img.shields.io/npm/l/react)]
 
 
@@ -12,6 +13,7 @@ Projeto desenvolvido para o terceiro semestre do curso de Desenvolvimento de Sof
 - Framework Django;
 - SQLite;
 - MongoDB;
+- Figma.
 
   <h3>Tópicos que serão encontrados nesse repositório<br></h3>
   • Códigos desenvolvidos em Python;<br>
@@ -19,7 +21,7 @@ Projeto desenvolvido para o terceiro semestre do curso de Desenvolvimento de Sof
   • Utilização do paradigma de programação OO (Object-oriented);<br>
 
 ## Escopo
-Plataforma desenvolvida para criar um catálogo dinâmico integrado de produtos que possui como principal objetivo, se conectar com o sistemas de supermercados, e realizar uma análise de seu estoque e da data de validade dos produtos, em proporção da necessidade apresentada pelas instituições de caridade, é ofertado acordos com os produtos com as datas de validade mais próximas, assim instigando a população a doar esses produtos que serão desperdiçados a essas instituições, auxiliando há duas causas simultaneamente, o desperdício de alimentos e a fome.
+Plataforma desenvolvida para criar um catálogo dinâmico integrado de produtos que possui como principal objetivo, se conectar com o sistemas de supermercados, e realizar uma análise de seu estoque e da data de validade dos produtos, em proporção da necessidade apresentada pelas instituições de caridade, é ofertado acordos com os produtos com as datas de validade mais próximas, assim instigando a população a doar esses produtos que serão desperdiçados a essas instituições, auxiliando há duas causas simultaneamente, o desperdício de alimentos e a fome. Você pode visualizar nosso projeto no figma: <a href="https://www.figma.com/file/YpctAiCvAaiG9dwdNYjY9N/KeyProvide?type=design&node-id=0-1&mode=design&t=BdHU6nYyAzdUclzZ-0">KeyProvide</a>.
 
 ## No sistema é possível encontrar:
  •	Estrutura para as entidades que se relacionam no sistema; <br> 

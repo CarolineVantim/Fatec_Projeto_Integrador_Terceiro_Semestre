@@ -20,12 +20,16 @@
         <div class="wrapper fadeInDown" data-toggle="buttons">
             <div id="formContent">
                <div class="fadeIn first">
+                <br>
                 <img src='{% static "polls/media/key_provide_logo.png"%}'/>
                </div>
                <form method="post">
                     {% csrf_token%}
+                  <br>
                   <input type="radio" id="fisico" name="tipo_usuario" value="fisico">Pessoa Fisica
+                  <br>
                   <input type="radio" id="juridico" name="tipo_usuario" value="juridico">Pessoa Juridica
+                  <br>
                   <input type="submit" class="fadeIn fourth" value="Continuar">
                     <div class="form-group">
                         {% for message in messages %}

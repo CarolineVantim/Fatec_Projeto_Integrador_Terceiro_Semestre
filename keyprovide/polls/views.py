@@ -176,7 +176,7 @@ def login_user(request):
         print(user)
         if user is not None:
             auth.login(request, user)
-            return redirect('home')
+            return redirect("/")
         else:
             messages.info(request, 'Senha ou usuários inválido')
             return redirect('login_user')
@@ -231,7 +231,7 @@ def home(request, term: str or None = None):
 
 def logout_user(request):
     auth.logout(request)
-    return HttpResponseRedirect('home')
+    return HttpResponseRedirect("/")
 
 def productdetail(request, pk):
     term = request.GET.get('lookup')
@@ -366,7 +366,3 @@ def specific_list(request, list_control_id: int, user_id: int) -> None:
         "can_donate": False if user_id_list == user_id else True
     }
     return render(request, "shop_car.html", context)
-
-
-def list_institution(request):
-    return render(request, "list_institution.html")

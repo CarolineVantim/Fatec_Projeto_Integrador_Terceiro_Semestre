@@ -142,7 +142,7 @@ def register(request, tipo_usuario):
                     user_form.cleaned_data.pop('confirm_password')
                     user_registration = User.objects.create_user(**user_form.cleaned_data)
                     user_registration.save()
-                    return redirect('login_user')
+                    return redirect('../../login_user')
             else:
                 messages.info(request, 'Senhas não coincidem.')
                 return redirect('registration')
